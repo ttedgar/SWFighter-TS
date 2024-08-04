@@ -1,0 +1,158 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: url('../public/images/stars.jpg') repeat-x;
+  background-size: auto;
+  animation: moveBackground 10s linear infinite;
+}
+
+@keyframes moveBackground {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.tie {
+  height: 40px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.shot1 {
+  display: ruby;
+  height: 20px;
+  position: absolute;
+}
+
+.deathstar {
+  position: fixed;
+  height: 200px;
+  right: 0;
+  top: 100px;
+  transform: translateY(-50%);
+}
+
+.laser {
+  display: none;
+  position: relative;
+  width: 1500px;
+}
+
+@keyframes appearDisappear {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes appearDisappear {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#deathstar.active {
+  animation: appearDisappear 5s forwards;
+}
+
+#stardestroyer.active {
+  animation: appearDisappear 2s forwards;
+}
+
+#infobar {
+  display: block;
+  position: absolute;
+  height: 30px;
+  background-color: rgb(34, 34, 34);
+}
+
+.life {
+  display: inline;
+  position: relative;
+  height: 30px;
+}
+
+#lives.active {
+  animation: appearDisappear 1s forwards;
+}
+
+@keyframes flicker {
+  0%   { opacity: 0.025; }
+  25%  { opacity: 0.125; }
+  50%  { opacity: 0.075; }
+  75%  { opacity: 0.175; }
+  100% { opacity: 0.05; }
+}
+
+.beam {
+  animation: flicker 0.5s infinite alternate;
+}
