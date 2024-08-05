@@ -4,7 +4,6 @@ export class EventHandler {
     private _left: boolean;
     private _right: boolean;
     private _shoot: boolean;
-    private _singleShot: boolean
 
     constructor() {
         this._down = false;
@@ -12,15 +11,11 @@ export class EventHandler {
         this._left = false;
         this._right = false;
         this._shoot = false;
-        this._singleShot = false;
-        this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleKeyUp = this.handleKeyUp.bind(this);
-        this.handleKeys = this.handleKeys.bind(this);
     }
 
     public handleKeys() {
-        window.addEventListener('keydown', this.handleKeyDown);
-        window.addEventListener('keyup', this.handleKeyUp);
+        window.addEventListener('keydown', this.handleKeyDown.bind(this));
+        window.addEventListener('keyup', this.handleKeyUp.bind(this));
     }
 
     private handleKeyDown(event : KeyboardEvent) {
@@ -38,10 +33,6 @@ export class EventHandler {
         }
         if (event.key === 's') {
             this._shoot = true;
-            // this._singleShot = true;
-            // setTimeout(() => {
-            //     this._singleShot = false;
-            // }, 1)
         }
     }
 
@@ -60,7 +51,6 @@ export class EventHandler {
         }
         if (event.key === 's') {
             this._shoot = false;
-            // this._singleShot = false;
         }
     }
 
@@ -82,9 +72,5 @@ export class EventHandler {
 
     get shoot(): boolean {
         return this._shoot;
-    }
-
-    get singleShot(): boolean {
-        return this._singleShot;
     }
 }

@@ -1,60 +1,78 @@
 import {Utility} from "../utility/Utility.ts";
 import {Ship} from "./Ship.ts"
-import {EffectFactory} from "../factory/EffectFactory.ts";
+import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 
 export class Deathstar extends Ship {
-    private cyclesPerMovement: number;
-    private readonly static INITIAL_CYCLES_PER_MOVEMENT: number = 3;
     private readonly static HEIGHT: number = 200;
-    private readonly static WIDTH: number = 130;
-    private dsDown: boolean;
-    private hp: number;
+    private readonly static WIDTH: number = -20;
+    private readonly static HP: number = 1;
+    private readonly static INITIAL_SPEED: number = 2;
     private laser: HTMLElement;
-    private isLaserActive: boolean;
+    private _isLaserActive: boolean;
 
     constructor(element: HTMLElement) {
-        super(element, Deathstar.WIDTH, Deathstar.HEIGHT);
-        this.cyclesPerMovement = Deathstar.INITIAL_CYCLES_PER_MOVEMENT;
-        this.dsDown = true;
-        this.hp = 50;
+        super(element, Deathstar.WIDTH, Deathstar.HEIGHT, Deathstar.HP, Deathstar.INITIAL_SPEED, true);
         this.laser = EffectFactory.createDeathLaserHtml();
-        this.isLaserActive = false;
+        this._isLaserActive = false;
     }
 
-    private moveDown = (cycle: number) => {
-        if (cycle % this.cyclesPerMovement === 0 && this.dsDown) {
-            this.style.top = Utility.positionToNumber(this.style.top) + 2 + 'px';
+    private moveDown () {
+        if (this.isDown) {
+            this.style.top = Utility.positionToNumber(this.style.top) + this.verticalSpeed + 'px';
             if (Utility.positionToNumber(this.style.top) > window.innerHeight - 200) {
-                this.dsDown = false;
-                this.cyclesPerMovement = Utility.rng(2, 4);
+                this.isDown = false;
+                this.verticalSpeed = Utility.rng(1, 3)
             }
         }
     }
 
-    private moveUp = (cycle: number) => {
-        if (cycle % this.cyclesPerMovement === 0 && !this.dsDown) {
-            this.style.top = Utility.positionToNumber(this.style.top) - 2 + 'px';
+    private moveUp () {
+        if (!this.isDown) {
+            this.style.top = Utility.positionToNumber(this.style.top) - this.verticalSpeed + 'px';
             if (Utility.positionToNumber(this.style.top) < 0) {
-                this.dsDown = true;
-                this.cyclesPerMovement = Utility.rng(2, 4);
+                this.isDown = true;
+                this.verticalSpeed = Utility.rng(1, 3)
             }
         }
     }
 
-    public move(cycle: number) {
-        this.moveDown(cycle);
-        this.moveUp(cycle);
+    public move() {
+        this.moveDown();
+        this.moveUp();
     }
 
-    public shoot(cycle: number) {
+    public shoot(time: number) {
         this.laser.style.top = Utility.positionToNumber(this.element.style.top) - 105 + 'px';
-        if (cycle % 300 === 0) {
+        if (Math.round(time / 100) % 30 === 0) {
             this.laser.style.display = 'block';
-            this.isLaserActive = true;
+            this._isLaserActive = true;
         }
-        if (cycle % 600 === 0) {
+        if (Math.round(time / 100) % 60 === 0) {
             this.laser.style.display = 'none';
-            this.isLaserActive = false;
+            this._isLaserActive = false;
         }
+    }
+
+    public die() {
+        this._shipManager.removeShip(this);
+        this.move = () => {};
+        this.laser.remove();
+        const img: HTMLImageElement = this.element as HTMLImageElement;
+        img.src = './images/deathstar-ruin.png';
+        const bigBang = EffectFactory.createDeathstarBang(this.element);
+        this.element.classList.add('active')
+        setTimeout(() => {
+            bigBang.remove();
+            this.element.remove();
+        }, 5000)
+    }
+
+
+    get isLaserActive(): boolean {
+        return this._isLaserActive;
+    }
+
+    public getLaserTop() : number {
+        return Utility.positionToNumber(this.laser.style.top);
     }
 }

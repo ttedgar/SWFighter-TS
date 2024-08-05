@@ -131,7 +131,9 @@ body, html {
 #infobar {
   display: block;
   position: absolute;
+  top: 0;
   height: 30px;
+  width: 100%;
   background-color: rgb(34, 34, 34);
 }
 
@@ -142,6 +144,10 @@ body, html {
 }
 
 #lives.active {
+  animation: appearDisappear 1s forwards;
+}
+
+#xWing.active {
   animation: appearDisappear 1s forwards;
 }
 

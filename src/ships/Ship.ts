@@ -1,21 +1,30 @@
 import {Utility} from "../utility/Utility.ts";
+import {ShotManager} from "../game/ShotManager.ts";
+import {ShipManager} from "../game/ShipManager.ts";
 
 export abstract class Ship {
     protected element: HTMLElement;
     protected style: CSSStyleDeclaration;
     private _width: number;
     private _height: number;
-    private hp: number;
+    protected _hp: number;
+    protected _shotManager: ShotManager;
+    protected _shipManager: ShipManager;
+    protected verticalSpeed: number;
+    protected isDown: boolean;
 
-    constructor(element: HTMLElement, width: number, height: number, hp: number) {
+    constructor(element: HTMLElement, width: number, height: number, hp: number, verticalSpeed: number, isDown: boolean) {
         this.element = element;
         this.style = element.style;
-        this._width = length;
+        this._width = width;
         this._height = height;
-        this.hp = hp;
+        this._hp = hp;
+        this.verticalSpeed = verticalSpeed;
+        this.isDown = isDown;
     }
 
-    public abstract move(cycle: number);
+    public abstract move();
+    public abstract shoot(cycle: number);
 
     public getTop() : number {
         return Utility.positionToNumber(this.style.top);
@@ -34,7 +43,28 @@ export abstract class Ship {
         return this._height;
     }
 
-    public decrementHp() {
-        this.hp--;
+    public getHit() {
+        this._hp--;
+        if (this._hp === 0) {
+            this.die();
+        }
+    }
+
+    public abstract die();
+
+    public setShotManager(shotManager: ShotManager) {
+        if (!this._shotManager) {
+            this._shotManager = shotManager;
+        }
+    }
+    public setShipManager(shipManager: ShipManager) {
+        if (!this._shipManager) {
+            this._shipManager = shipManager;
+        }
+    }
+
+
+    get hp(): number {
+        return this._hp;
     }
 }
