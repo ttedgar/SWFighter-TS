@@ -8,8 +8,10 @@ import {ShipManager} from "./ShipManager.ts";
 import {Event} from "../events/Event.ts";
 import {InfoBar} from "../infobar/InfoBar.ts";
 import {ShipFactory} from "../factory/ship_factory/ShipFactory.ts";
-import {HitDetector} from "./HitDetector.ts";
+import {HitController} from "./HitController.ts";
 import {Shot} from "../shot/Shot.ts";
+import {ShipHandler} from "../ships/ShipHandler.ts";
+import {ShotHandler} from "../shot/ShotHandler.ts";
 
 
 export class GameLogic implements ShotManager, ShipManager{
@@ -23,7 +25,9 @@ export class GameLogic implements ShotManager, ShipManager{
   private enemyShots: [Shot];
   private events: Event;
   private shipFactory: ShipFactory;
-  private hitDetector: HitDetector;
+  private hitDetector: HitController;
+  private shipHandler: ShipHandler;
+  private shotHandler: ShotHandler;
 
   constructor() {
     this.lastTime = 0;
@@ -32,33 +36,51 @@ export class GameLogic implements ShotManager, ShipManager{
     this.events = new Event();
     this.ships = [];
     this.playerShots = [];
+    this.enemyShots = [];
     this.eventHandler = new EventHandler();
     this.xWing = new XWing(ShipCreator.createXWingHtml(), 10, this.eventHandler);
     this.shipFactory = new ShipFactory();
-    this.hitDetector = new HitDetector();
+    this.hitDetector = new HitController();
+    this.shipHandler = new ShipHandler();
+    this.shotHandler = new ShotHandler();
     this.registerPlayerShot = this.registerPlayerShot.bind(this);
+    this.registerShot = this.registerShot.bind(this);
   }
 
   public run() {
     this.xWing.setShotManager(this);
     this.shipFactory.setShipManager(this);
-    this.hitDetector.setUpHitDetector(this, this)
+    this.hitDetector.setUp(this, this)
+    this.shipHandler.setShipManager(this);
+    this.shotHandler.setUp(this, this);
     InfoBar.createInfoBar(this.xWing.hp);
     requestAnimationFrame(this.gameLoop);
   }
 
   private gameLoop = (timeStamp: number) => {
-    this.giveShipsShipManager();
+    this.giveShipsManager();
     this.countTime(timeStamp);
     this.hitDetector.checkForHits();
+    this.shotHandler.moveShots(this.time);
     this.xWing.handleXWing(this.time);
-    this.shipFactory.handleDeathStar(10, this.time);
-    this.shipFactory.handleTieFighter(20, this.time, 0);
+    this.createShips();
     requestAnimationFrame(this.gameLoop);
   }
 
-  private giveShipsShipManager() {
-    this.ships.forEach(ship => ship.setShipManager(this));
+  private createShips() {
+    // this.shipFactory.createDeathStar(10, this.time);
+    // this.shipFactory.createTieSwarm(20, 0, this.time, 10, 5)
+    // this.shipFactory.createTieSwarm(21, window.innerHeight, this.time, 10, 5)
+    this.shipFactory.createShuttle(21, 500, this.time, 1);
+    this.shipFactory.createShuttle(20, 300, this.time, -1);
+    this.shipHandler.act(this.time);
+  }
+
+  private giveShipsManager() {
+    this.ships.forEach(ship => {
+      ship.setShipManager(this);
+      ship.setShotManager(this);
+    });
   }
 
   private countTime(timeStamp: number) {
@@ -114,5 +136,9 @@ export class GameLogic implements ShotManager, ShipManager{
 
   setShots(shots: [Shot]) {
     this.enemyShots = shots;
+  }
+
+  removeShot(shotToRemove: Shot) {
+    this.enemyShots = this.enemyShots.filter(shot => shotToRemove !== shot);
   }
 }

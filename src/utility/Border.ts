@@ -1,5 +1,4 @@
 export class Border {
-
     public static bottomBorder(elementStyle) {
         return elementStyle.top.split('p')[0] < window.innerHeight - 100
     }

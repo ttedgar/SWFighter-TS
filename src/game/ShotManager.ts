@@ -3,9 +3,10 @@ import {Shot} from "../shot/Shot.ts";
 
 export interface ShotManager{
     registerPlayerShot(shot: PlayerShot);
-    getPlayerShots();
+    getPlayerShots(): [PlayerShot];
     setPlayerShots(shots: [PlayerShot]);
     registerShot(shot: Shot);
-    getShots();
+    getShots() : [Shot];
     setShots(shots: [Shot]);
+    removeShot(shot: Shot);
 }

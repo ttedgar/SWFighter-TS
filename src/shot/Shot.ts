@@ -2,15 +2,14 @@ import {Utility} from "../utility/Utility.ts";
 
 export abstract class Shot{
     private _element: HTMLElement;
-    protected interval: number;
+    protected lastTime: number;
 
     protected constructor(element: HTMLElement) {
         this._element = element;
-        this.fly();
+        this.lastTime = 0;
     }
 
-    abstract fly();
-    abstract stop();
+    abstract fly(time: number);
 
 
     get element(): HTMLElement {
@@ -21,6 +20,10 @@ export abstract class Shot{
         return Utility.positionToNumber(this.element.style.top);
     }
 
+    public modifyTop(value: number) {
+        this.element.style.top = Utility.positionToNumber(this.element.style.top) + value + 'px';
+    }
+
     public getLeft() : number {
         return Utility.positionToNumber(this.element.style.left);
     }
@@ -29,9 +32,11 @@ export abstract class Shot{
         const shotImg: HTMLImageElement = this._element as HTMLImageElement;
         shotImg.src = './images/explosion.gif';
         this._element.style.width = '30px';
-        this.stop();
         setTimeout(() => {
             this._element.remove();
         }, 500)
     }
 }
+
+
+

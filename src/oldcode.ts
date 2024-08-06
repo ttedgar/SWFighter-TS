@@ -668,13 +668,13 @@ function main() {
   const lives = appendElement(infoBar, 'div', 'lives', null, {id: 'lives'});
   createXwing();
   displayLives();
-  // createShuttle(100);
+  createShuttle(100);
   // createShuttle(500);
   // createStardestroyer();
   // createStardestroyer(100);
   // createDeathstar();
   // createTieFighters(0, 0.5, 1, 2000, 2000);
-  // createTieFighters(window.innerHeight-50, 0.5, 1, 2000, 2000);
+  createTieFighters(window.innerHeight-50, 0.5, 1, 2000, 2000);
   // createTieFighter(0, 0.1, 1, 300);
 
   requestAnimationFrame(animate);

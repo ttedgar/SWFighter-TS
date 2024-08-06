@@ -18,4 +18,12 @@ export class Utility{
     root.textContent = '';
     root.textContent = 'GAME OVER!';
   }
+
+  public static convertTime(time: number, divider: number = 100): number {
+    return Math.round(time / divider);
+  }
+
+  public static isTimeTo(time: number, period: number, lastTime: number = 0, divider: number = 100): boolean {
+    return this.convertTime(time, divider) % period === 0 && this.convertTime(time, divider) !== lastTime;
+  }
 }

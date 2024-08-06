@@ -5,16 +5,16 @@ import {Ship} from "../ships/Ship.ts";
 import {ShootingMechanics} from "../utility/ShootingMechanics.ts";
 import {Deathstar} from "../ships/Deathstar.ts";
 
-export class HitDetector{
+export class HitController {
     private shotManager: ShotManager;
     private shipManager: ShipManager;
 
-    public setUpHitDetector(shotManager: ShotManager, shipManager: ShipManager) {
+    public setUp(shotManager: ShotManager, shipManager: ShipManager) {
         this.shotManager = shotManager;
         this.shipManager = shipManager;
     }
 
-    private checkEnemyHits() {
+    private checkHitsOnEnemy() {
         this.shotManager.getPlayerShots().forEach((shot: PlayerShot) => {
             this.shipManager.getShips().forEach((ship: Ship) => {
                 if (ShootingMechanics.isEnemyHit(ship, shot)) {
@@ -33,12 +33,23 @@ export class HitDetector{
         }
     }
 
-    private checkPlayerHits() {
+    private checkEnemyShotHits() {
+        this.shotManager.getShots().forEach(shot => {
+            if (ShootingMechanics.isPlayerHitByShot(shot, this.shipManager.getXWing())) {
+                this.shipManager.getXWing().getHit();
+                shot.element.remove();
+                this.shotManager.removeShot(shot);
+            }
+        })
+    }
+
+    private checkHitsOnPlayer() {
         this.checkDeathLaserHit();
+        this.checkEnemyShotHits();
     }
 
     public checkForHits() {
-        this.checkEnemyHits();
-        this.checkPlayerHits();
+        this.checkHitsOnEnemy();
+        this.checkHitsOnPlayer();
     }
 }

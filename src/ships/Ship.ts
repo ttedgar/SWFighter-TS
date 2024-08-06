@@ -10,21 +10,21 @@ export abstract class Ship {
     protected _hp: number;
     protected _shotManager: ShotManager;
     protected _shipManager: ShipManager;
-    protected verticalSpeed: number;
-    protected isDown: boolean;
+    protected verticalSpeed?: number;
+    protected isDown?: boolean;
 
-    constructor(element: HTMLElement, width: number, height: number, hp: number, verticalSpeed: number, isDown: boolean) {
+    constructor(element: HTMLElement, width: number, height: number, hp: number, verticalSpeed?: number, isDown?: boolean) {
         this.element = element;
         this.style = element.style;
         this._width = width;
         this._height = height;
         this._hp = hp;
-        this.verticalSpeed = verticalSpeed;
-        this.isDown = isDown;
+        this.verticalSpeed = verticalSpeed ?? 0;
+        this.isDown = isDown ?? false;
     }
 
     public abstract move();
-    public abstract shoot(cycle: number);
+    public abstract shoot(time: number);
 
     public getTop() : number {
         return Utility.positionToNumber(this.style.top);
@@ -68,3 +68,4 @@ export abstract class Ship {
         return this._hp;
     }
 }
+

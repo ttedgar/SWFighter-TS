@@ -65,6 +65,9 @@ export class XWing extends Ship {
     public getTop(): number {
         return Utility.positionToNumber(this.element.style.top);
     }
+    public getLeft(): number {
+        return Utility.positionToNumber(this.element.style.left);
+    }
 
     public getHit() {
         if (!this.isInvincible) {

@@ -1,6 +1,5 @@
 import {ElementCreator} from "./ElementCreator.ts";
 import {root} from "../../utility/Root.ts";
-import {Deathstar} from "../../ships/Deathstar.ts";
 
 export class ShipCreator {
     public static createDeathStarHtml() : HTMLElement {
@@ -19,11 +18,21 @@ export class ShipCreator {
         return xWing;
     }
 
-    public static createTieFighter(horizontalPosition: number) : HTMLElement {
+    public static createTieFighter(verticalPosition: number) : HTMLElement {
         const tie = ElementCreator.appendElement(root, 'img', 'tie', null, {src: './images/TIEfighter.png', id: 'tie'});
         tie.style.position = 'absolute';
-        tie.style.top = horizontalPosition + 'px';
+        tie.style.top = verticalPosition + 'px';
         tie.style.left = window.innerWidth + 100 + 'px';
         return tie;
+    }
+
+    public static createShuttle(verticalPosition: number) : HTMLElement {
+        const shuttle = ElementCreator.appendElement(root, 'img', 'shuttle', null, {src: './images/shuttle.png'});
+        let shuttleStyle = shuttle.style;
+        shuttleStyle.height = '80px';
+        shuttleStyle.position = 'fixed';
+        shuttleStyle.top = verticalPosition + 'px'
+        shuttleStyle.left = window.innerWidth - 300 + 'px';
+        return shuttle;
     }
 }

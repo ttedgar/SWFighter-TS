@@ -41,4 +41,22 @@ export class EffectFactory{
         }, 500)
         return bang;
     }
+
+    public static createTieShot(tie: HTMLElement): HTMLElement {
+        const shot = ElementCreator.appendElement(root, 'img', 'tieShot', null, {src: './images/TIEshot.png'});
+        shot.style.position = 'absolute';
+        shot.style.height = '25px';
+        shot.style.top = Utility.positionToNumber(tie.style.top) + 7 + 'px';
+        shot.style.left = Utility.positionToNumber(tie.style.left) + 15 + 'px';
+        return shot;
+    }
+
+    public static createMissile(shuttle: HTMLElement): HTMLElement {
+        const rocket = ElementCreator.appendElement(root, 'img', 'rocket', null, {src: './images/rocket.png'});
+        rocket.style.height = '8px';
+        rocket.style.position = 'fixed';
+        rocket.style.top = Utility.positionToNumber(shuttle.style.top) + 55 + 'px';
+        rocket.style.left = Utility.positionToNumber(shuttle.style.left) + 40 + 'px';
+        return rocket;
+    }
 }

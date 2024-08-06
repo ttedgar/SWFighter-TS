@@ -5,7 +5,7 @@ import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 export class Deathstar extends Ship {
     private readonly static HEIGHT: number = 200;
     private readonly static WIDTH: number = -20;
-    private readonly static HP: number = 1;
+    private readonly static HP: number = 50;
     private readonly static INITIAL_SPEED: number = 2;
     private laser: HTMLElement;
     private _isLaserActive: boolean;
@@ -43,11 +43,11 @@ export class Deathstar extends Ship {
 
     public shoot(time: number) {
         this.laser.style.top = Utility.positionToNumber(this.element.style.top) - 105 + 'px';
-        if (Math.round(time / 100) % 30 === 0) {
+        if (Utility.isTimeTo(time, 30)) {
             this.laser.style.display = 'block';
             this._isLaserActive = true;
         }
-        if (Math.round(time / 100) % 60 === 0) {
+        if (Utility.isTimeTo(time, 60)) {
             this.laser.style.display = 'none';
             this._isLaserActive = false;
         }

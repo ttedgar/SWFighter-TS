@@ -7,13 +7,10 @@ export abstract class ShipAssembler{
         this.shipManager = shipManager;
     }
 
-    abstract create(timeOfAppearance: number, horizontalPosition: number, time: number);
-
-    abstract act(timeOfAppearance: number, time: number);
-
-    abstract handle(timeOfAppearance: number, time: number, horizontalPosition: number);
+    abstract create(timeOfAppearance: number, horizontalPosition: number, time: number, angleModifier: number);
 
 }
+
 
 
 
