@@ -1,12 +1,16 @@
 import {Utility} from "../utility/Utility.ts";
 
-export abstract class Shot{
+export abstract class Shot {
     private _element: HTMLElement;
     protected lastTime: number;
+    private _top: number;
+    private _bottom: number;
 
-    protected constructor(element: HTMLElement) {
+    protected constructor(element: HTMLElement, top: number = 50, bottom: number = 10) {
         this._element = element;
         this.lastTime = 0;
+        this._top = top;
+        this._bottom = bottom;
     }
 
     abstract fly(time: number);
@@ -16,15 +20,26 @@ export abstract class Shot{
         return this._element;
     }
 
-    public getTop() : number {
+    get bottom(): number {
+        return this._bottom;
+    }
+
+    get top(): number {
+        return this._top;
+    }
+
+    public getVerticalPosition() : number {
         return Utility.positionToNumber(this.element.style.top);
     }
 
     public modifyTop(value: number) {
         this.element.style.top = Utility.positionToNumber(this.element.style.top) + value + 'px';
     }
+    public modifyLeft(value: number) {
+        this.element.style.left = Utility.positionToNumber(this.element.style.left) + value + 'px';
+    }
 
-    public getLeft() : number {
+    public getHorizontalPosition() : number {
         return Utility.positionToNumber(this.element.style.left);
     }
 
@@ -36,7 +51,13 @@ export abstract class Shot{
             this._element.remove();
         }, 500)
     }
+
+    public isHoming(): boolean {
+        return false;
 }
+}
+
+
 
 
 

@@ -35,4 +35,14 @@ export class ShipCreator {
         shuttleStyle.left = window.innerWidth - 300 + 'px';
         return shuttle;
     }
+
+    public static createStarDestroyer(verticalPosition: number) : HTMLElement {
+        const starDestroyer = ElementCreator.appendElement(root, 'img', 'starDestroyer', null, {src: './images/starDestroyer.png'});
+        let sdStyle = starDestroyer.style;
+        verticalPosition ? sdStyle.top = verticalPosition + 'px' : null;
+        sdStyle.height = '100px';
+        sdStyle.position = 'fixed';
+        sdStyle.left = window.innerWidth + 400 + 'px';
+        return starDestroyer;
+    }
 }

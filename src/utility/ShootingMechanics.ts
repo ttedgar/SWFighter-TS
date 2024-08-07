@@ -2,15 +2,23 @@ import {Ship} from "../ships/Ship.ts";
 import {Shot} from "../shot/Shot.ts";
 import {Deathstar} from "../ships/Deathstar.ts";
 import {XWing} from "../ships/XWing.ts";
-import {Utility} from "./Utility.ts";
+import {KamikazeDrone} from "../shot/KamikazeDrone.ts";
 
 export class ShootingMechanics{
 
     public static isEnemyHit(ship: Ship, shot: Shot): boolean {
-        return shot.getLeft() > ship.getLeft() - ship.width &&
-            shot.getLeft() < ship.getLeft() - ship.width + 50 &&
-            shot.getTop() > ship.getTop() &&
-            shot.getTop() < ship.getTop() + ship.height
+        return shot.getHorizontalPosition() > ship.getLeft() - ship.width &&
+            shot.getHorizontalPosition() < ship.getLeft() - ship.width + 50 &&
+            shot.getVerticalPosition() > ship.getTop() &&
+            shot.getVerticalPosition() < ship.getTop() + ship.height
+    }
+
+    public static isKamikazeDroneHit(drone: KamikazeDrone, shot: Shot): boolean {
+        console.log(shot.getVerticalPosition(), drone.getVerticalPosition());
+        return shot.getHorizontalPosition() > drone.getHorizontalPosition() &&
+            shot.getHorizontalPosition() < drone.getHorizontalPosition() + 30 &&
+            shot.getVerticalPosition() > drone.getVerticalPosition() &&
+            shot.getVerticalPosition() < drone.getVerticalPosition() + 10
     }
 
     public static isPlayerHitByLaser(deathstar: Deathstar, xWing: XWing): boolean {
@@ -21,10 +29,10 @@ export class ShootingMechanics{
     }
 
     public static isPlayerHitByShot(shot: Shot, xWing: XWing): boolean {
-        return shot.getLeft() < xWing.getLeft() + 50 &&
-            shot.getLeft() > xWing.getLeft() + 10 &&
-            shot.getTop() < xWing.getTop() + 50 &&
-            shot.getTop() > xWing.getTop() + 10
+        return shot.getHorizontalPosition() < xWing.getLeft() + 50 &&
+            shot.getHorizontalPosition() > xWing.getLeft() + 10 &&
+            shot.getVerticalPosition() < xWing.getTop() + shot.top &&
+            shot.getVerticalPosition() > xWing.getTop() + shot.bottom
     }
 
     public static isTimeToShoot(isShootEvent: boolean, time: number, lastTime: number): boolean {

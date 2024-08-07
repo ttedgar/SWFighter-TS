@@ -1,6 +1,7 @@
 import {ElementCreator} from "./ElementCreator.ts";
 import {root} from "../../utility/Root.ts";
-import {Utility} from "../../utility/Utility.ts";
+import {positionToNumber, Utility} from "../../utility/Utility.ts";
+import {StarDestroyer} from "../../ships/StarDestroyer.ts";
 
 export class EffectFactory{
     public static createDeathLaserHtml() : HTMLElement {
@@ -51,6 +52,15 @@ export class EffectFactory{
         return shot;
     }
 
+    public static createBlasterShot(tie: HTMLElement): HTMLElement {
+        const shot = ElementCreator.appendElement(root, 'img', 'tieShot', null, {src: './images/TIEshot.png'});
+        shot.style.position = 'absolute';
+        shot.style.height = '50px';
+        shot.style.top = Utility.positionToNumber(tie.style.top) + 30 + 'px';
+        shot.style.left = Utility.positionToNumber(tie.style.left) + 15 + 'px';
+        return shot;
+    }
+
     public static createMissile(shuttle: HTMLElement): HTMLElement {
         const rocket = ElementCreator.appendElement(root, 'img', 'rocket', null, {src: './images/rocket.png'});
         rocket.style.height = '8px';
@@ -58,5 +68,24 @@ export class EffectFactory{
         rocket.style.top = Utility.positionToNumber(shuttle.style.top) + 55 + 'px';
         rocket.style.left = Utility.positionToNumber(shuttle.style.left) + 40 + 'px';
         return rocket;
+    }
+
+    public static createTractorBeam(starDestroyer: HTMLElement): HTMLElement {
+        let beam = ElementCreator.appendElement(root, 'img', 'beam', null, {src: './images/beam2.png'});
+        beam.style.width = 1000 + 'px';
+        beam.style.position = 'fixed'
+        beam.style.display = 'none';
+        beam.style.top = Utility.positionToNumber(starDestroyer.style.top) - 400 + 'px';
+        beam.style.left = Utility.positionToNumber(starDestroyer.style.left) - 700 + 'px';
+        return beam;
+    }
+
+    public static createKamikazeDrone(starDestroyer: HTMLElement): HTMLElement {
+        let beam = ElementCreator.appendElement(root, 'img', 'drone', null, {src: './images/drone4.gif'});
+        beam.style.width = 15 + 'px';
+        beam.style.position = 'fixed'
+        beam.style.top = Utility.positionToNumber(starDestroyer.style.top) + 40 + 'px';
+        beam.style.left = Utility.positionToNumber(starDestroyer.style.left) + 30 + 'px';
+        return beam;
     }
 }

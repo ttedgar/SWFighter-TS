@@ -10,7 +10,7 @@ export class Shuttle extends Ship {
     private static readonly HEIGHT: number = 60;
     private static readonly VERTICAL_SPEED: number = 3;
     private static readonly HORIZONTAL_SPEED: number = 3;
-    private static readonly LEFT_POSITION_OF_DISAPPEARANCE: number = -50;
+    private static readonly LEFT_POSITION_OF_DISAPPEARANCE: number = -100;
     private speedLeft: number;
     private lastShotTime: number;
     private angle: number;
@@ -26,7 +26,7 @@ export class Shuttle extends Ship {
         this.angleModifier = angleModifier;
     }
 
-    die() {
+    public die() {
         this._shipManager.removeShip(this);
         const shotImg: HTMLImageElement = this.element as HTMLImageElement;
         shotImg.src = './images/explosion.gif';
@@ -64,11 +64,12 @@ export class Shuttle extends Ship {
         }
     }
 
-    move() {
-        const radians = this.angle * (Math.PI / 180);
+    public move() {
+        this.moveLeft(1);
+        const radians: number = this.angle * (Math.PI / 180);
 
-        const nextX = Math.cos(radians) * this.stepSize;
-        const nextY = Math.sin(radians) * this.stepSize;
+        const nextX: number = Math.cos(radians) * this.stepSize;
+        const nextY: number = Math.sin(radians) * this.stepSize;
 
         if (nextX > 0) {
             this.moveRight(nextX);
@@ -87,7 +88,7 @@ export class Shuttle extends Ship {
         }
     }
 
-    shoot(time: number) {
+    public shoot(time: number) {
         if (Utility.isTimeTo(time, 30, this.lastShotTime) && this._shotManager) {
             const missileHtml: HTMLElement = EffectFactory.createMissile(this.element);
             this.lastShotTime = Utility.convertTime(time);

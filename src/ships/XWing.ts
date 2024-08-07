@@ -95,4 +95,9 @@ export class XWing extends Ship {
             InfoBar.stopHitPulse();
         }, duration)
     }
+
+    public getPulled(vertical: number, horizontal: number) {
+        this.element.style.top = Utility.positionToNumber(this.element.style.top) + vertical + 'px';
+        this.element.style.left = Utility.positionToNumber(this.element.style.left) + horizontal + 'px';
+    }
 }

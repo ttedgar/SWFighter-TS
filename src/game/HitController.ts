@@ -4,6 +4,8 @@ import {PlayerShot} from "../shot/PlayerShot.ts";
 import {Ship} from "../ships/Ship.ts";
 import {ShootingMechanics} from "../utility/ShootingMechanics.ts";
 import {Deathstar} from "../ships/Deathstar.ts";
+import {KamikazeDrone} from "../shot/KamikazeDrone.ts";
+import {s} from "vite/dist/node/types.d-aGj9QkWt";
 
 export class HitController {
     private shotManager: ShotManager;
@@ -21,6 +23,17 @@ export class HitController {
                     shot.hit();
                     ship.getHit();
                     this.shotManager.setPlayerShots(this.shotManager.getPlayerShots().filter(playerShot => playerShot !== shot));
+                }
+            })
+
+            this.shotManager.getShots().filter(enemyShot => enemyShot instanceof KamikazeDrone).forEach(enemyShot => {
+                const drone = enemyShot as KamikazeDrone;
+                if (ShootingMechanics.isKamikazeDroneHit(drone, shot)) {
+                    shot.hit();
+                    drone.hit();
+                    this.shotManager.setPlayerShots(this.shotManager.getPlayerShots().filter(playerShot => playerShot !== shot));
+                    drone.element.remove();
+                    this.shotManager.removeShot(drone);
                 }
             })
         })

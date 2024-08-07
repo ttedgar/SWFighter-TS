@@ -65,7 +65,7 @@ export class TieFighter extends Ship {
         this.moveLeft();
     }
 
-    shoot(time: number) {
+    public shoot(time: number) {
         if (Utility.isTimeTo(time, 10, this.lastShotTime) && this._shotManager) {
             const shotHtml: HTMLElement = EffectFactory.createTieShot(this.element);
             this.lastShotTime = Utility.convertTime(time);

@@ -1,7 +1,8 @@
 import {Shot} from "./Shot.ts";
-import {positionToNumber, Utility} from "../utility/Utility.ts";
+import {Utility} from "../utility/Utility.ts";
+import {Homing} from "./Homing.ts";
 
-export class Missile extends Shot {
+export class Missile extends Shot implements Homing{
     private static readonly INITIAL_SPEED: number = 3;
     private speed: number;
     private speedModifier1: number;
@@ -25,10 +26,14 @@ export class Missile extends Shot {
     }
 
     public homing(xWingVerticalPosition: number) {
-        if (this.getTop() > xWingVerticalPosition + 40) {
+        if (this.getVerticalPosition() > xWingVerticalPosition + 40) {
             this.modifyTop(-1);
         } else {
             this.modifyTop(1);
         }
+    }
+
+    isHoming(): boolean {
+        return true;
     }
 }

@@ -483,7 +483,7 @@ function gameOver() {
 function handleStardestroyer(stardestroyer) {
   let sdStyle = stardestroyer.style
   let sdSpeed;
-  let beam = appendElement(root, 'img', 'beam', null, {src: './images/beam2.png', id: `beam:${stardestroyer.id.split(':')[1]}`});
+  let beam = appendElement(root, 'img', 'beam', null, {src: './images/beam2.png'});
   beam.style.width = 1000 + 'px';
   beam.style.position = 'fixed'
   beam.style.display = 'none';
@@ -570,7 +570,7 @@ function tractorBeam(stardestroyer, beamDuration, beamPulse) {
 }
 
 function createStardestroyer(startingHeight) {
-  const stardestroyer = appendElement(root, 'img', 'stardestroyer', null, {src: './images/stardestroyer.png', id: `sd:${shuttleHPs.length}`});
+  const stardestroyer = appendElement(root, 'img', 'stardestroyer', null, {src: './images/starDestroyer.png', id: `sd:${shuttleHPs.length}`});
   shuttleHPs.push(40);
   let sdStyle = stardestroyer.style;
   startingHeight ? sdStyle.top = startingHeight + 'px' : null;

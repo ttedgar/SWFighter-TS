@@ -2,6 +2,7 @@ export class EventTimes{
     private static _lastTieTime: number = 0;
     private static _lastDeathstarTime: number = 0;
     private static _lastShuttleTime: number = 0;
+    private static _lastStarDestroyerTime: number = 0;
 
     static get lastShuttleTime(): number {
         return this._lastShuttleTime;
@@ -10,8 +11,6 @@ export class EventTimes{
     static set lastShuttleTime(value: number) {
         this._lastShuttleTime = value;
     }
-
-
 
     static get lastTieTime(): number {
         return this._lastTieTime;
@@ -27,5 +26,13 @@ export class EventTimes{
 
     static set lastDeathstarTime(value: number) {
         this._lastDeathstarTime = value;
+    }
+
+    static get lastStarDestroyerTime(): number {
+        return this._lastStarDestroyerTime;
+    }
+
+    static set lastStarDestroyerTime(value: number) {
+        this._lastStarDestroyerTime = value;
     }
 }
