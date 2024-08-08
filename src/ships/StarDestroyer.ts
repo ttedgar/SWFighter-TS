@@ -97,22 +97,42 @@ export class StarDestroyer extends Ship {
         }
     }
 
+    private calculateVerticalDistance(): number {
+        return this.getTop() - this._shipManager.getXWing().getTop();
+    }
+    private calculateHorizontalDistance(): number {
+        return this.getLeft() - this._shipManager.getXWing().getLeft();
+    }
+
+    private calculateSumOfLegs(): number {
+        return Math.abs(this.calculateVerticalDistance()) + Math.abs(this.calculateHorizontalDistance());
+    }
+
     private calculateBlasterVerticalVelocity(): number {
-        const verticalDistance: number = this.getTop() - this._shipManager.getXWing().getTop();
-        const horizontalDistance: number = this.getLeft() - this._shipManager.getXWing().getLeft();
-        const sumOfLegs: number = Math.abs(verticalDistance) + Math.abs(horizontalDistance);
-        const ratioOfVertical: number = Math.abs(verticalDistance) / sumOfLegs;
-        return verticalDistance < 0 ? ratioOfVertical * -10 : ratioOfVertical * 10;
+        const ratioOfVertical: number = Math.abs(this.calculateVerticalDistance()) / this.calculateSumOfLegs();
+        return this.calculateVerticalDistance() < 0 ? ratioOfVertical * -10 : ratioOfVertical * 10;
     }
 
     private calculateBlasterHorizontalVelocity(): number {
-        return this.calculateBlasterVerticalVelocity() < 0 ? 10 + this.calculateBlasterVerticalVelocity() : 10 - this.calculateBlasterVerticalVelocity();
+        const ratioOfHorizontal: number = Math.abs(this.calculateHorizontalDistance()) / this.calculateSumOfLegs();
+        return this.calculateHorizontalDistance() < 0 ? ratioOfHorizontal * -10 : ratioOfHorizontal * 10;
+    }
+
+    private setRotationOfBlasterShot(shotHtml: HTMLElement): void {
+        let rotation: number = 0;
+        if (this.calculateHorizontalDistance() > 0) {
+            rotation = this.calculateBlasterVerticalVelocity() * 9;
+        } else if (this.calculateHorizontalDistance() < 0) {
+            rotation = this.calculateBlasterVerticalVelocity() * -9 + 180;
+        }
+        shotHtml.style.transform = `rotate(${rotation}deg)`
     }
 
     private shootSniperBlaster(time: number) {
         if (Utility.isTimeTo(time, 10, this.lastShotTime) && this._shipManager && this._shotManager) {
-            const shotHtml: HTMLElement = EffectFactory.createBlasterShot(this.element);
             this.lastShotTime = Utility.convertTime(time);
+            const shotHtml: HTMLElement = EffectFactory.createBlasterShot(this.element);
+            this.setRotationOfBlasterShot(shotHtml);
             const shot: TieShot = new BlasterShot(shotHtml, this.calculateBlasterVerticalVelocity(), this.calculateBlasterHorizontalVelocity())
             this._shotManager.registerShot(shot);
         }

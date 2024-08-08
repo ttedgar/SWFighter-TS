@@ -1,6 +1,6 @@
 import {ElementCreator} from "./ElementCreator.ts";
 import {root} from "../../utility/Root.ts";
-import {positionToNumber, Utility} from "../../utility/Utility.ts";
+import {Utility} from "../../utility/Utility.ts";
 import {StarDestroyer} from "../../ships/StarDestroyer.ts";
 
 export class EffectFactory{
@@ -15,6 +15,7 @@ export class EffectFactory{
 
     public static createXWingShot(xWingStyle: CSSStyleDeclaration, cycle: number) : HTMLElement {
         const playerShot = ElementCreator.appendElement(root, 'img', 'shot', null, {src: './images/shot.png', id: cycle});
+        playerShot.style.zIndex = '3';
         playerShot.style.position = 'absolute';
         playerShot.style.width = '10px';
         playerShot.style.top = Utility.positionToNumber(xWingStyle.top) + 44 + 'px';
@@ -61,6 +62,15 @@ export class EffectFactory{
         return shot;
     }
 
+    public static createJuditCruiserShot(tie: HTMLElement): HTMLElement {
+        const shot = ElementCreator.appendElement(root, 'img', 'tieShot', null, {src: './images/TIEshot.png'});
+        shot.style.position = 'absolute';
+        shot.style.height = '30px';
+        shot.style.top = Utility.positionToNumber(tie.style.top) + 7 + 'px';
+        shot.style.left = Utility.positionToNumber(tie.style.left) + 15 + 'px';
+        return shot;
+    }
+
     public static createMissile(shuttle: HTMLElement): HTMLElement {
         const rocket = ElementCreator.appendElement(root, 'img', 'rocket', null, {src: './images/rocket.png'});
         rocket.style.height = '8px';
@@ -87,5 +97,28 @@ export class EffectFactory{
         beam.style.top = Utility.positionToNumber(starDestroyer.style.top) + 40 + 'px';
         beam.style.left = Utility.positionToNumber(starDestroyer.style.left) + 30 + 'px';
         return beam;
+    }
+
+    public static createVortex1(teleporter: HTMLElement): HTMLElement {
+        let teleport1 = ElementCreator.appendElement(root, 'img', 'drone', null, {src: './images/teleport2.gif'});
+        teleport1.style.zIndex = '1';
+        teleport1.style.display = 'none';
+        teleport1.style.width = 200 + 'px';
+        teleport1.style.position = 'fixed'
+        teleport1.style.top = Utility.positionToNumber(teleporter.style.top) - 85 + 'px';
+        teleport1.style.left = Utility.positionToNumber(teleporter.style.left) - 50 + 'px';
+        return teleport1;
+    }
+
+    public static createVortex2(teleporter: HTMLElement): HTMLElement {
+        let teleport2 = ElementCreator.appendElement(root, 'img', 'drone', null, {src: './images/teleport1reverse.gif'});
+        teleport2.style.display = 'none';
+        teleport2.classList.add('opaque')
+        teleport2.style.transform = 'rotate(90deg)'
+        teleport2.style.width = 100 + 'px';
+        teleport2.style.position = 'fixed'
+        teleport2.style.top = Utility.positionToNumber(teleporter.style.top) - 60 + 'px';
+        teleport2.style.left = Utility.positionToNumber(teleporter.style.left) + 'px';
+        return teleport2;
     }
 }

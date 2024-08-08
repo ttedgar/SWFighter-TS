@@ -3,6 +3,15 @@ export class EventTimes{
     private static _lastDeathstarTime: number = 0;
     private static _lastShuttleTime: number = 0;
     private static _lastStarDestroyerTime: number = 0;
+    private static _lastTeleporterTime: number = 0;
+
+    static get lastTeleporterTime(): number {
+        return this._lastTeleporterTime;
+    }
+
+    static set lastTeleporterTime(value: number) {
+        this._lastTeleporterTime = value;
+    }
 
     static get lastShuttleTime(): number {
         return this._lastShuttleTime;

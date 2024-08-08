@@ -45,4 +45,15 @@ export class ShipCreator {
         sdStyle.left = window.innerWidth + 400 + 'px';
         return starDestroyer;
     }
+
+    public static createTeleporter(verticalPosition: number) : HTMLElement {
+        const teleporter = ElementCreator.appendElement(root, 'img', 'teleporter', null, {src: './images/teleporter.png'});
+        let teleporterStyle = teleporter.style;
+        teleporterStyle.zIndex = '2';
+        verticalPosition ? teleporterStyle.top = verticalPosition + 'px' : null;
+        teleporterStyle.height = '30px';
+        teleporterStyle.position = 'fixed';
+        teleporterStyle.left = window.innerWidth/2 + 400 + 'px';
+        return teleporter;
+    }
 }
