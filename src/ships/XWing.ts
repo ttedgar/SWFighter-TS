@@ -9,15 +9,17 @@ import {ShootingMechanics} from "../utility/ShootingMechanics.ts";
 
 export class XWing extends Ship {
     static readonly TIME_DIVIDER: number = 25;
-    static SHOOT_INTERVAL: number = 5;
+    static SHOOT_INTERVAL: number = 4;
+    private static readonly _HEIGHT: number = 75;
+    private static readonly _WIDTH: number = 10;
     private eventHandler: EventHandler;
     private isInvincible: boolean;
     private lastTime: number;
-    private static readonly SPEED: number = 4;
+    private static readonly SPEED: number = 10;
 
 
     constructor(element: HTMLElement, hp: number, eventHandler: EventHandler) {
-        super(element, 10, 10, hp);
+        super(element, XWing._WIDTH, XWing._HEIGHT, hp);
         this.eventHandler = eventHandler;
         this.isInvincible = false;
         this.lastTime = 0;
@@ -58,23 +60,23 @@ export class XWing extends Ship {
         return shot;
     }
 
-    die() {
-        Utility.gameOver();
+    public die() {
+        // Utility.gameOver();
     }
 
-    public getTop(): number {
+    public getVerticalPosition(): number {
         return Utility.positionToNumber(this.element.style.top);
     }
-    public getLeft(): number {
+    public getHorizontalPosition(): number {
         return Utility.positionToNumber(this.element.style.left);
     }
 
     public getHit() {
         if (!this.isInvincible) {
             super.getHit();
+            this.hitPulse();
             InfoBar.refreshLives(this.hp);
             this.handleInvincibility(500);
-            EffectFactory.createBang(this.element);
         }
     }
 
@@ -86,11 +88,11 @@ export class XWing extends Ship {
     }
 
     private handleInvincibility(duration: number) {
-        this.isInvincible = true;
+        // this.isInvincible = true;
         this.element.classList.add('active');
         InfoBar.startHitPulse();
         setTimeout(() => {
-            this.isInvincible = false;
+            // this.isInvincible = false;
             this.element.classList.remove('active');
             InfoBar.stopHitPulse();
         }, duration)

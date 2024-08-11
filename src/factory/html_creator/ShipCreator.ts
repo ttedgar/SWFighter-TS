@@ -1,5 +1,6 @@
 import {ElementCreator} from "./ElementCreator.ts";
 import {root} from "../../utility/Root.ts";
+import {Utility} from "../../utility/Utility.ts";
 
 export class ShipCreator {
     public static createDeathStarHtml() : HTMLElement {
@@ -55,5 +56,14 @@ export class ShipCreator {
         teleporterStyle.position = 'fixed';
         teleporterStyle.left = window.innerWidth/2 + 400 + 'px';
         return teleporter;
+    }
+
+    public static createAsteroid(verticalPosition: number, height: number) : HTMLElement {
+        const tie = ElementCreator.appendElement(root, 'img', 'rotating-element', null, {src: `./images/asteroids/asteroid${Math.round(Utility.rng(1,4))}.png`});
+        tie.style.position = 'absolute';
+        tie.style.height = height + 'px';
+        tie.style.top = verticalPosition + 'px';
+        tie.style.left = window.innerWidth + 100 + 'px';
+        return tie;
     }
 }

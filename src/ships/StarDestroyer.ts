@@ -98,10 +98,10 @@ export class StarDestroyer extends Ship {
     }
 
     private calculateVerticalDistance(): number {
-        return this.getTop() - this._shipManager.getXWing().getTop();
+        return this.getVerticalPosition() - this._shipManager.getXWing().getVerticalPosition();
     }
     private calculateHorizontalDistance(): number {
-        return this.getLeft() - this._shipManager.getXWing().getLeft();
+        return this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition();
     }
 
     private calculateSumOfLegs(): number {
@@ -133,14 +133,14 @@ export class StarDestroyer extends Ship {
             this.lastShotTime = Utility.convertTime(time);
             const shotHtml: HTMLElement = EffectFactory.createBlasterShot(this.element);
             this.setRotationOfBlasterShot(shotHtml);
-            const shot: TieShot = new BlasterShot(shotHtml, this.calculateBlasterVerticalVelocity(), this.calculateBlasterHorizontalVelocity())
+            const shot: BlasterShot = new BlasterShot(shotHtml, this.calculateBlasterVerticalVelocity(), this.calculateBlasterHorizontalVelocity())
             this._shotManager.registerShot(shot);
         }
     }
 
     public shoot(time: number) {
-        this.useTractorBeam(time);
-        this.deployDrones(time);
+        // this.useTractorBeam(time);
+        // this.deployDrones(time);
         this.shootSniperBlaster(time);
     }
 }

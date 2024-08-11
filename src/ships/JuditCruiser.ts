@@ -14,6 +14,7 @@ export class JuditCruiser extends Ship {
     private speedLeft: number;
     private lastShotTime: number;
     private isVortexOn: boolean;
+    private isTeleportOn: boolean;
     private vortex1: HTMLElement;
     private vortex2: HTMLElement;
 
@@ -22,15 +23,16 @@ export class JuditCruiser extends Ship {
         this.speedLeft = speedLeft;
         this.lastShotTime = 0;
         this.isVortexOn = false;
+        this.isTeleportOn = true;
         this.vortex1 = EffectFactory.createVortex1(this.element);
         this.vortex2 = EffectFactory.createVortex2(this.element);
     }
 
     private calculateVerticalDistance(): number {
-        return this.getTop() - this._shipManager.getXWing().getTop();
+        return this.getVerticalPosition() - this._shipManager.getXWing().getVerticalPosition();
     }
     private calculateHorizontalDistance(): number {
-        return this.getLeft() - this._shipManager.getXWing().getLeft();
+        return this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition();
     }
 
     private calculateSumOfLegs(): number {
@@ -101,7 +103,7 @@ export class JuditCruiser extends Ship {
     }
 
     private teleport() {
-        if (this._shipManager && this._shipManager.getXWing().getTop() > this.getTop() - 50 && this._shipManager.getXWing().getTop() < this.getTop() + 50 && !this.isVortexOn) {
+        if (this._shipManager && this._shipManager.getXWing().getVerticalPosition() > this.getVerticalPosition() - 50 && this._shipManager.getXWing().getVerticalPosition() < this.getVerticalPosition() + 50 && !this.isVortexOn) {
             this.vortexAppear();
             setTimeout(() => {
                 this.vortexCollapse();
@@ -110,9 +112,14 @@ export class JuditCruiser extends Ship {
                     this.shipReappear();
                     setTimeout(() => {
                         this.endTeleportSequence();
+                        this.isTeleportOn = true;
                     }, 1000)
                 }, 1000)
             }, 3000)
+
+            setTimeout(() => {
+                this.isTeleportOn = false;
+            }, 2500)
         }
     }
 
@@ -122,10 +129,10 @@ export class JuditCruiser extends Ship {
     }
 
     private calculateVerticalDistance(): number {
-        return this.getTop() - this._shipManager.getXWing().getTop();
+        return this.getVerticalPosition() - this._shipManager.getXWing().getVerticalPosition() - this._shipManager.getXWing().height/3;
     }
     private calculateHorizontalDistance(): number {
-        return this.getLeft() - this._shipManager.getXWing().getLeft();
+        return this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition() + this._shipManager.getXWing().width*3;
     }
 
     private calculateSumOfLegs(): number {
@@ -153,12 +160,18 @@ export class JuditCruiser extends Ship {
     }
 
     shoot(time: number) {
-        if (Utility.isTimeTo(time, 10, this.lastShotTime) && this._shipManager && this._shotManager) {
+        if (Utility.isTimeTo(time, 1, this.lastShotTime) && this._shipManager && this._shotManager && this.isTeleportOn) {
             this.lastShotTime = Utility.convertTime(time);
             const shotHtml: HTMLElement = EffectFactory.createJuditCruiserShot(this.element);
             this.setRotationOfBlasterShot(shotHtml);
             const shot: TieShot = new BlasterShot(shotHtml, this.calculateBlasterVerticalVelocity(), this.calculateBlasterHorizontalVelocity())
             this._shotManager.registerShot(shot);
+        }
+    }
+
+    public getHit() {
+        if (!this.isTeleportOn) {
+            super.getHit();
         }
     }
 }

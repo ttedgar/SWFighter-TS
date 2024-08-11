@@ -4,6 +4,15 @@ export class EventTimes{
     private static _lastShuttleTime: number = 0;
     private static _lastStarDestroyerTime: number = 0;
     private static _lastTeleporterTime: number = 0;
+    private static _lastAsteroidTime: number = 0;
+
+    static get lastAsteroidTime(): number {
+        return this._lastAsteroidTime;
+    }
+
+    static set lastAsteroidTime(value: number) {
+        this._lastAsteroidTime = value;
+    }
 
     static get lastTeleporterTime(): number {
         return this._lastTeleporterTime;

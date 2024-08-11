@@ -3,7 +3,7 @@ import {ShotManager} from "../game/ShotManager.ts";
 import {ShipManager} from "../game/ShipManager.ts";
 
 export abstract class Ship {
-    protected element: HTMLElement;
+    private _element: HTMLElement;
     protected style: CSSStyleDeclaration;
     private _width: number;
     private _height: number;
@@ -14,7 +14,7 @@ export abstract class Ship {
     protected isDown?: boolean;
 
     constructor(element: HTMLElement, width: number, height: number, hp: number, verticalSpeed?: number, isDown?: boolean) {
-        this.element = element;
+        this._element = element;
         this.style = element.style;
         this._width = width;
         this._height = height;
@@ -26,11 +26,11 @@ export abstract class Ship {
     public abstract move();
     public abstract shoot(time: number);
 
-    public getTop() : number {
+    public getVerticalPosition() : number {
         return Utility.positionToNumber(this.style.top);
     }
 
-    public getLeft() : number {
+    public getHorizontalPosition() : number {
         return Utility.positionToNumber(this.style.left);
     }
 
@@ -63,11 +63,15 @@ export abstract class Ship {
         }
     }
 
-
     get hp(): number {
         return this._hp;
     }
+
+    get element(): HTMLElement {
+        return this._element;
+    }
 }
+
 
 
 

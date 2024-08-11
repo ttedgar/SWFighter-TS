@@ -12,6 +12,7 @@ import {HitController} from "./HitController.ts";
 import {Shot} from "../shot/Shot.ts";
 import {ShipHandler} from "../ships/ShipHandler.ts";
 import {ShotHandler} from "../shot/ShotHandler.ts";
+import {Utility} from "../utility/Utility.ts";
 
 
 export class GameLogic implements ShotManager, ShipManager{
@@ -70,13 +71,15 @@ export class GameLogic implements ShotManager, ShipManager{
   private createShips() {
     // this.shipFactory.createDeathStar(10, this.time);
     // this.shipFactory.createTieSwarm(20, 0, this.time, 10, 5)
-    // this.shipFactory.createTieSwarm(21, window.innerHeight, this.time, 10, 5)
+    // this.shipFactory.createTieSwarm(40, window.innerHeight, this.time, 10, 5)
     // this.shipFactory.createShuttle(21, 500, this.time, 1);
     // this.shipFactory.createShuttle(20, 300, this.time, -1);
-    // this.shipFactory.createStarDestroyer(5, window.innerHeight/2, this.time)
-    this.shipFactory.createJuditCruiser(5, window.innerHeight/5, this.time);
+    // this.shipFactory.createStarDestroyer(5, window.innerHeight/2, this.time);
+    // this.shipFactory.createJuditCruiser(5, window.innerHeight/5, this.time);
+    this.shipFactory.generateAsteroids(10, 10, this.time);
     this.shipHandler.act(this.time);
   }
+
 
   private giveShipsManager() {
     this.ships.forEach(ship => {

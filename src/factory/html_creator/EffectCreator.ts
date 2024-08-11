@@ -1,9 +1,9 @@
 import {ElementCreator} from "./ElementCreator.ts";
 import {root} from "../../utility/Root.ts";
 import {Utility} from "../../utility/Utility.ts";
-import {StarDestroyer} from "../../ships/StarDestroyer.ts";
 
 export class EffectFactory{
+
     public static createDeathLaserHtml() : HTMLElement {
         const laser: HTMLElement = ElementCreator.appendElement(root, 'img', 'dsLaser', null, {src: './images/laser6.png'});
         laser.style.display = 'none';
@@ -44,19 +44,31 @@ export class EffectFactory{
         return bang;
     }
 
+    public static createBang2(element: HTMLElement) : HTMLElement {
+        const bang = ElementCreator.appendElement(root, 'img', null, null, {src: './images/asteroids/explosion.gif'});
+        bang.style.width = '200px';
+        bang.style.position = 'absolute';
+        bang.style.top = element.style.top;
+        bang.style.left = Utility.positionToNumber(element.style.left) + 'px';
+        setTimeout(() => {
+            bang.remove();
+        }, 500)
+        return bang;
+    }
+
     public static createTieShot(tie: HTMLElement): HTMLElement {
         const shot = ElementCreator.appendElement(root, 'img', 'tieShot', null, {src: './images/TIEshot.png'});
         shot.style.position = 'absolute';
-        shot.style.height = '25px';
-        shot.style.top = Utility.positionToNumber(tie.style.top) + 7 + 'px';
-        shot.style.left = Utility.positionToNumber(tie.style.left) + 15 + 'px';
+        shot.style.height = '5px';
+        shot.style.top = Utility.positionToNumber(tie.style.top) + Utility.positionToNumber(tie.style.height)/2 + 'px';
+        shot.style.left = Utility.positionToNumber(tie.style.left) + Utility.positionToNumber(tie.style.width) + 'px';
         return shot;
     }
 
     public static createBlasterShot(tie: HTMLElement): HTMLElement {
         const shot = ElementCreator.appendElement(root, 'img', 'tieShot', null, {src: './images/TIEshot.png'});
         shot.style.position = 'absolute';
-        shot.style.height = '50px';
+        shot.style.height = '10px';
         shot.style.top = Utility.positionToNumber(tie.style.top) + 30 + 'px';
         shot.style.left = Utility.positionToNumber(tie.style.left) + 15 + 'px';
         return shot;
@@ -65,9 +77,9 @@ export class EffectFactory{
     public static createJuditCruiserShot(tie: HTMLElement): HTMLElement {
         const shot = ElementCreator.appendElement(root, 'img', 'tieShot', null, {src: './images/TIEshot.png'});
         shot.style.position = 'absolute';
-        shot.style.height = '30px';
-        shot.style.top = Utility.positionToNumber(tie.style.top) + 7 + 'px';
-        shot.style.left = Utility.positionToNumber(tie.style.left) + 15 + 'px';
+        shot.style.height = '5px';
+        shot.style.top = Utility.positionToNumber(tie.style.top) + 10 + 'px';
+        shot.style.left = Utility.positionToNumber(tie.style.left) + 45 + 'px';
         return shot;
     }
 

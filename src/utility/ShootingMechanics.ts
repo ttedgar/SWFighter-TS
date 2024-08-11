@@ -7,10 +7,10 @@ import {KamikazeDrone} from "../shot/KamikazeDrone.ts";
 export class ShootingMechanics{
 
     public static isEnemyHit(ship: Ship, shot: Shot): boolean {
-        return shot.getHorizontalPosition() > ship.getLeft() - ship.width &&
-            shot.getHorizontalPosition() < ship.getLeft() - ship.width + 50 &&
-            shot.getVerticalPosition() > ship.getTop() &&
-            shot.getVerticalPosition() < ship.getTop() + ship.height
+        return shot.getHorizontalPosition() > ship.getHorizontalPosition() - ship.width &&
+            shot.getHorizontalPosition() < ship.getHorizontalPosition() - ship.width + 50 &&
+            shot.getVerticalPosition() > ship.getVerticalPosition() &&
+            shot.getVerticalPosition() < ship.getVerticalPosition() + ship.height
     }
 
     public static isKamikazeDroneHit(drone: KamikazeDrone, shot: Shot): boolean {
@@ -24,15 +24,22 @@ export class ShootingMechanics{
     public static isPlayerHitByLaser(deathstar: Deathstar, xWing: XWing): boolean {
         return deathstar &&
             deathstar.isLaserActive &&
-            deathstar.getLaserTop() > xWing.getTop() - 160 &&
-            deathstar.getLaserTop() < xWing.getTop() - 100
+            deathstar.getLaserTop() > xWing.getVerticalPosition() - 160 &&
+            deathstar.getLaserTop() < xWing.getVerticalPosition() - 100
     }
 
     public static isPlayerHitByShot(shot: Shot, xWing: XWing): boolean {
-        return shot.getHorizontalPosition() < xWing.getLeft() + 50 &&
-            shot.getHorizontalPosition() > xWing.getLeft() + 10 &&
-            shot.getVerticalPosition() < xWing.getTop() + shot.top &&
-            shot.getVerticalPosition() > xWing.getTop() + shot.bottom
+        return shot.getHorizontalPosition() < xWing.getHorizontalPosition() + xWing.width * 2 &&
+            shot.getHorizontalPosition() > xWing.getHorizontalPosition() - xWing.width / 2 &&
+            shot.getVerticalPosition() < xWing.getVerticalPosition() + xWing.height &&
+            shot.getVerticalPosition() > xWing.getVerticalPosition()
+    }
+
+    public static isCrashed(ship: Ship, ship2: Ship): boolean {
+        return ship.getHorizontalPosition() < ship2.getHorizontalPosition() + ship2.width &&
+            ship.getHorizontalPosition() > ship2.getHorizontalPosition() - ship.width &&
+            ship.getVerticalPosition() < ship2.getVerticalPosition() + ship2.height &&
+            ship.getVerticalPosition() > ship2.getVerticalPosition() - ship.height
     }
 
     public static isTimeToShoot(isShootEvent: boolean, time: number, lastTime: number): boolean {

@@ -25,16 +25,16 @@ export class TractorBeam {
     }
 
     public pullXWing(xWing: XWing) {
-        if (xWing.getTop() > Utility.positionToNumber(this.element.style.top) + 400) {
+        if (xWing.getVerticalPosition() > Utility.positionToNumber(this.element.style.top) + 400) {
             xWing.getPulled(-2, 0);
         }
-        if (xWing.getTop() < Utility.positionToNumber(this.element.style.top) + 400) {
+        if (xWing.getVerticalPosition() < Utility.positionToNumber(this.element.style.top) + 400) {
             xWing.getPulled(2, 0);
         }
-        if (xWing.getLeft() > Utility.positionToNumber(this.element.style.left) + 800) {
+        if (xWing.getHorizontalPosition() > Utility.positionToNumber(this.element.style.left) + 800) {
             xWing.getPulled(0, -2);
         }
-        if (xWing.getLeft() < Utility.positionToNumber(this.element.style.left) + 800) {
+        if (xWing.getHorizontalPosition() < Utility.positionToNumber(this.element.style.left) + 800) {
             xWing.getPulled(0, 2);
         }
     }

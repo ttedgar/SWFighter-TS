@@ -6,6 +6,8 @@ import {ShootingMechanics} from "../utility/ShootingMechanics.ts";
 import {Deathstar} from "../ships/Deathstar.ts";
 import {KamikazeDrone} from "../shot/KamikazeDrone.ts";
 import {s} from "vite/dist/node/types.d-aGj9QkWt";
+import {Asteroid} from "../ships/Asteroid.ts";
+import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 
 export class HitController {
     private shotManager: ShotManager;
@@ -42,6 +44,8 @@ export class HitController {
     private checkDeathLaserHit() {
         const deathstar: Deathstar = this.shipManager.getShips().filter(ship => ship instanceof Deathstar)[0] as Deathstar;
         if (ShootingMechanics.isPlayerHitByLaser(deathstar, this.shipManager.getXWing())) {
+            const bang: HTMLElement = EffectFactory.createBang(this.shipManager.getXWing().element);
+            bang.style.top = deathstar.getLaserTop() + 150 + 'px';
             this.shipManager.getXWing().getHit();
         }
     }
@@ -50,9 +54,30 @@ export class HitController {
         this.shotManager.getShots().forEach(shot => {
             if (ShootingMechanics.isPlayerHitByShot(shot, this.shipManager.getXWing())) {
                 this.shipManager.getXWing().getHit();
-                shot.element.remove();
+                shot.hit();
                 this.shotManager.removeShot(shot);
             }
+        })
+    }
+
+    private checkCrashes() {
+        this.shipManager.getShips().forEach((ship: Ship) => {
+            if (ShootingMechanics.isCrashed(ship, this.shipManager.getXWing())) {
+                this.shipManager.getXWing().getHit();
+                ship.getHit();
+            }
+        })
+    }
+
+    private checkAsteroidHitsOnEnemies() {
+        this.shipManager.getShips().filter((ship: Ship) => ship instanceof Asteroid).forEach((ship: Ship) => {
+            const asteroid: Asteroid = ship as Asteroid;
+            this.shipManager.getShips().filter((ship: Ship) => !(ship instanceof Asteroid)).forEach((ship: Ship) => {
+                if (ShootingMechanics.isCrashed(ship, asteroid)) {
+                    asteroid.getHit();
+                    ship.getHit();
+                }
+            })
         })
     }
 
@@ -62,6 +87,8 @@ export class HitController {
     }
 
     public checkForHits() {
+        this.checkAsteroidHitsOnEnemies()
+        this.checkCrashes();
         this.checkHitsOnEnemy();
         this.checkHitsOnPlayer();
     }

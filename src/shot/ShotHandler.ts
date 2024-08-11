@@ -16,7 +16,7 @@ export class ShotHandler{
         this._shotManager.getPlayerShots().forEach(shot => shot.fly(time))
         this._shotManager.getShots().filter(shot => shot.isHoming()).forEach(shot => {
             const smartAmmo = shot as Homing;
-            smartAmmo.homing(this._shipManager.getXWing().getTop(), this._shipManager.getXWing().getLeft())
+            smartAmmo.homing(this._shipManager.getXWing().getVerticalPosition(), this._shipManager.getXWing().getHorizontalPosition())
         })
     }
 }

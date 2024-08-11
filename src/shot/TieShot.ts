@@ -4,6 +4,11 @@ import {Utility} from "../utility/Utility.ts";
 export class TieShot extends Shot {
     private static readonly SPEED: number = 10;
 
+
+    constructor(element: HTMLElement) {
+        super(element);
+    }
+
     fly(time: number) {
         if (Utility.isTimeTo(time, 1, this.lastTime, 1)) {
             this.lastTime = Utility.convertTime(time, 1);

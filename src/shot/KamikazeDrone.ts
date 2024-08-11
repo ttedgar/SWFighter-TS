@@ -25,12 +25,12 @@ export class KamikazeDrone extends Shot implements Homing {
     }
 
     public homing(xWingVerticalPosition: number, xWingHorizontalPosition: number) {
-        if (this.getVerticalPosition() > xWingVerticalPosition + 40) {
+        if (this.getVerticalPosition() > xWingVerticalPosition + 30) {
             this.modifyTop(-1);
         } else {
             this.modifyTop(1);
         }
-        if (this.getHorizontalPosition() > xWingHorizontalPosition + 40) {
+        if (this.getHorizontalPosition() > xWingHorizontalPosition + 10) {
             this.modifyLeft(-1);
         } else {
             this.modifyLeft(1);

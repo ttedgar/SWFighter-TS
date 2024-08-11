@@ -2,14 +2,12 @@ import {Shot} from "./Shot.ts";
 import {Utility} from "../utility/Utility.ts";
 
 export class BlasterShot extends Shot {
-    private static readonly TOP: number = 50;
-    private static readonly BOTTOM: number = -20;
     private verticalVelocity: number;
     private horizontalVelocity: number;
 
 
     constructor(element: HTMLElement, verticalVelocity: number = 0, horizontalVelocity: number = 10) {
-        super(element, BlasterShot.TOP, BlasterShot.BOTTOM);
+        super(element);
         this.verticalVelocity = verticalVelocity;
         this.horizontalVelocity = horizontalVelocity;
     }

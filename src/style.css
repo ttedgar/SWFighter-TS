@@ -225,3 +225,16 @@ body, html {
 .collapse-ship {
   animation: collapse-ship 0.8s ease-in-out forwards;
 }
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating-element {
+  animation: rotate 20s linear infinite;
+}

@@ -3,14 +3,12 @@ import {Utility} from "../utility/Utility.ts";
 export abstract class Shot {
     private _element: HTMLElement;
     protected lastTime: number;
-    private _top: number;
-    private _bottom: number;
+    private explosionSize: number;
 
-    protected constructor(element: HTMLElement, top: number = 50, bottom: number = 10) {
+    protected constructor(element: HTMLElement, explosionSize: number = 30) {
         this._element = element;
         this.lastTime = 0;
-        this._top = top;
-        this._bottom = bottom;
+        this.explosionSize = explosionSize;
     }
 
     abstract fly(time: number);
@@ -18,14 +16,6 @@ export abstract class Shot {
 
     get element(): HTMLElement {
         return this._element;
-    }
-
-    get bottom(): number {
-        return this._bottom;
-    }
-
-    get top(): number {
-        return this._top;
     }
 
     public getVerticalPosition() : number {
@@ -46,7 +36,12 @@ export abstract class Shot {
     public hit() {
         const shotImg: HTMLImageElement = this._element as HTMLImageElement;
         shotImg.src = './images/explosion.gif';
-        this._element.style.width = '30px';
+        setTimeout(() => {
+            this._element.style.top = Utility.positionToNumber(this._element.style.top) - 10 + 'px';
+            this._element.style.left = Utility.positionToNumber(this._element.style.left) - 10 + 'px';
+            this._element.style.width = this.explosionSize + 'px';
+            this._element.style.height = this.explosionSize + 'px';
+        }, 10)
         setTimeout(() => {
             this._element.remove();
         }, 500)
