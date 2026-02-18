@@ -7,7 +7,7 @@ export class ShipCreator {
         const ds: HTMLElement = ElementCreator.appendElement(root, 'img', 'deathStar', null, {src: './images/deathstar.png', id: 'deathstar'})
         ds.style.height = '200px'
         ds.style.position = 'fixed';
-        ds.style.left = window.innerWidth - 220 + 'px';
+        ds.style.left = window.innerWidth + 400 + 'px';
         return ds;
     }
 

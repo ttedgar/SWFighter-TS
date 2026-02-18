@@ -7,6 +7,8 @@ export class Deathstar extends Ship {
     private static readonly WIDTH: number = -20;
     private static readonly HP: number = 50;
     private static readonly INITIAL_SPEED: number = 2;
+    private static readonly SLIDE_SPEED: number = 10;
+    private static readonly REST_POSITION: number = window.innerWidth - 220;
     private laser: HTMLElement;
     private _isLaserActive: boolean;
     private _isDead: boolean;
@@ -38,8 +40,15 @@ export class Deathstar extends Ship {
         }
     }
 
+    private slideIn(): void {
+        if (Utility.positionToNumber(this.style.left) > Deathstar.REST_POSITION) {
+            this.style.left = Utility.positionToNumber(this.style.left) - Deathstar.SLIDE_SPEED + 'px';
+        }
+    }
+
     public move() {
         if (this._isDead) return;
+        this.slideIn();
         this.moveDown();
         this.moveUp();
     }

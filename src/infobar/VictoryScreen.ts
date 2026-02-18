@@ -13,7 +13,7 @@ export class VictoryScreen {
             .textContent = 'The Rebels Won!';
 
         ElementCreator.appendElement(container, 'div', null, null, {id: 'victory-subtitle'})
-            .textContent = 'The SithFighter has been defeated...';
+            .textContent = 'The Emperor has been defeated...';
 
         ElementCreator.appendElement(container, 'div', null, null, {id: 'victory-score'})
             .textContent = `Final Score: ${score}`;
