@@ -2,7 +2,6 @@ import {Ship} from "./Ship.ts";
 import {Utility} from "../utility/Utility.ts";
 import {ShipCreator} from "../factory/html_creator/ShipCreator.ts";
 import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
-import {i} from "vite/dist/node/types.d-aGj9QkWt";
 
 export class Asteroid extends Ship {
     private static readonly WIDTH: number = -2;

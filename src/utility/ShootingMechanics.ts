@@ -14,7 +14,6 @@ export class ShootingMechanics{
     }
 
     public static isKamikazeDroneHit(drone: KamikazeDrone, shot: Shot): boolean {
-        console.log(shot.getVerticalPosition(), drone.getVerticalPosition());
         return shot.getHorizontalPosition() > drone.getHorizontalPosition() &&
             shot.getHorizontalPosition() < drone.getHorizontalPosition() + 30 &&
             shot.getVerticalPosition() > drone.getVerticalPosition() &&

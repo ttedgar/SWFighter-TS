@@ -12,18 +12,17 @@ import {HitController} from "./HitController.ts";
 import {Shot} from "../shot/Shot.ts";
 import {ShipHandler} from "../ships/ShipHandler.ts";
 import {ShotHandler} from "../shot/ShotHandler.ts";
-import {Utility} from "../utility/Utility.ts";
 
 
 export class GameLogic implements ShotManager, ShipManager{
   private lastTime: number;
   private time: number;
   private deltaTime: number;
-  private ships: [Ship];
+  private ships: Ship[];
   private xWing: XWing;
   private eventHandler: EventHandler;
-  private playerShots: [PlayerShot];
-  private enemyShots: [Shot];
+  private playerShots: PlayerShot[];
+  private enemyShots: Shot[];
   private events: Event;
   private shipFactory: ShipFactory;
   private hitDetector: HitController;
@@ -70,13 +69,13 @@ export class GameLogic implements ShotManager, ShipManager{
 
   private createShips() {
     // this.shipFactory.createDeathStar(10, this.time);
-    // this.shipFactory.createTieSwarm(20, 0, this.time, 10, 5)
+    this.shipFactory.createTieSwarm(20, 0, this.time, 10, 5)
     // this.shipFactory.createTieSwarm(40, window.innerHeight, this.time, 10, 5)
     // this.shipFactory.createShuttle(21, 500, this.time, 1);
     // this.shipFactory.createShuttle(20, 300, this.time, -1);
     // this.shipFactory.createStarDestroyer(5, window.innerHeight/2, this.time);
     // this.shipFactory.createJuditCruiser(5, window.innerHeight/5, this.time);
-    this.shipFactory.generateAsteroids(10, 10, this.time);
+    // this.shipFactory.generateAsteroids(10, 10, this.time);
     this.shipHandler.act(this.time);
   }
 
@@ -98,19 +97,19 @@ export class GameLogic implements ShotManager, ShipManager{
   }
 
   //ShipManager methods:
-  public removeShip(shipToRemove: Ship) {
+  public removeShip(shipToRemove: Ship): void {
     this.ships = this.ships.filter(ship => shipToRemove !== ship);
   }
 
-  public addShip(ship: Ship) {
+  public addShip(ship: Ship): void {
     this.ships.push(ship);
   }
 
-  public getShips(): [Ship] {
+  public getShips(): Ship[] {
     return this.ships;
   }
 
-  public setShips(ships:[Ship]) {
+  public setShips(ships: Ship[]): void {
     this.ships = ships;
   }
 
@@ -119,31 +118,31 @@ export class GameLogic implements ShotManager, ShipManager{
   }
 
   //ShotManager methods:
-  public registerPlayerShot(shot: PlayerShot) {
+  public registerPlayerShot(shot: PlayerShot): void {
     this.playerShots.push(shot);
   }
 
-  public getPlayerShots(): [Shot] {
+  public getPlayerShots(): PlayerShot[] {
     return this.playerShots;
   }
 
-  public setPlayerShots(shots: [Shot]) {
+  public setPlayerShots(shots: PlayerShot[]): void {
     this.playerShots = shots;
   }
 
-  getShots() {
+  public getShots(): Shot[] {
     return this.enemyShots;
   }
 
-  registerShot(shot: Shot) {
+  public registerShot(shot: Shot): void {
     this.enemyShots.push(shot);
   }
 
-  setShots(shots: [Shot]) {
+  public setShots(shots: Shot[]): void {
     this.enemyShots = shots;
   }
 
-  removeShot(shotToRemove: Shot) {
+  public removeShot(shotToRemove: Shot): void {
     this.enemyShots = this.enemyShots.filter(shot => shotToRemove !== shot);
   }
 }

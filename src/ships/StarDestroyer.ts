@@ -2,7 +2,6 @@ import {Ship} from "./Ship.ts";
 import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 import {Utility} from "../utility/Utility.ts";
 import {TractorBeam} from "../shot/TractorBeam.ts";
-import {TieShot} from "../shot/TieShot.ts";
 import {KamikazeDrone} from "../shot/KamikazeDrone.ts";
 import {BlasterShot} from "../shot/BlasterShot.ts";
 
@@ -139,8 +138,8 @@ export class StarDestroyer extends Ship {
     }
 
     public shoot(time: number) {
-        // this.useTractorBeam(time);
-        // this.deployDrones(time);
+        this.useTractorBeam(time);
+        this.deployDrones(time);
         this.shootSniperBlaster(time);
     }
 }

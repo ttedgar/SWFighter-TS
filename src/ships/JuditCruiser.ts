@@ -94,7 +94,6 @@ export class JuditCruiser extends Ship {
         while (newVerticalPosition < Utility.positionToNumber(this.element.style.top) + 200 && newVerticalPosition > Utility.positionToNumber(this.element.style.top) - 200) {
             newVerticalPosition = Utility.rng(100, window.innerHeight - 100);
         }
-        console.log(newVerticalPosition);
         this.element.style.top = newVerticalPosition + 'px';
         this.vortex1.style.top = Utility.positionToNumber(this.element.style.top) - 85 + 'px';
         this.vortex1.style.left = Utility.positionToNumber(this.element.style.left) - 50 + 'px';

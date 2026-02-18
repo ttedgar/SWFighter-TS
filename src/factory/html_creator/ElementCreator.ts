@@ -1,5 +1,11 @@
 export class ElementCreator {
-    public static appendElement (parent, tagName, classes, text, attributes): HTMLElement {
+    public static appendElement(
+        parent: HTMLElement,
+        tagName: string,
+        classes: string | string[] | null,
+        text: string | null,
+        attributes: Record<string, string | number>
+    ): HTMLElement {
         const elementName: HTMLElement = document.createElement(tagName);
         parent.appendChild(elementName);
         if (classes) {

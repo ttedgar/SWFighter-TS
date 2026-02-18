@@ -5,7 +5,6 @@ import {Ship} from "../ships/Ship.ts";
 import {ShootingMechanics} from "../utility/ShootingMechanics.ts";
 import {Deathstar} from "../ships/Deathstar.ts";
 import {KamikazeDrone} from "../shot/KamikazeDrone.ts";
-import {s} from "vite/dist/node/types.d-aGj9QkWt";
 import {Asteroid} from "../ships/Asteroid.ts";
 import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 
