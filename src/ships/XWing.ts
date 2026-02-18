@@ -5,7 +5,6 @@ import {Border} from "../utility/Border.ts";
 import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 import {PlayerShot} from "../shot/PlayerShot.ts";
 import {InfoBar} from "../infobar/InfoBar.ts";
-import {ShootingMechanics} from "../utility/ShootingMechanics.ts";
 
 export class XWing extends Ship {
     static readonly TIME_DIVIDER: number = 25;
@@ -32,7 +31,9 @@ export class XWing extends Ship {
     }
 
     private shoot(time: number) {
-        if (ShootingMechanics.isTimeToShoot(this.eventHandler.shoot, time, this.lastTime)) {
+        if (this.eventHandler.shoot &&
+            Math.round(time / XWing.TIME_DIVIDER) % XWing.SHOOT_INTERVAL === 0 &&
+            Math.round(this.lastTime / XWing.TIME_DIVIDER) !== Math.round(time / XWing.TIME_DIVIDER)) {
             this.lastTime = time;
             this.createShot(time);
         }
@@ -64,38 +65,21 @@ export class XWing extends Ship {
         // Utility.gameOver();
     }
 
-    public getVerticalPosition(): number {
-        return Utility.positionToNumber(this.element.style.top);
-    }
-    public getHorizontalPosition(): number {
-        return Utility.positionToNumber(this.element.style.left);
-    }
-
     public getHit() {
         if (!this.isInvincible) {
             super.getHit();
             this.hitPulse();
             InfoBar.refreshLives(this.hp);
-            this.handleInvincibility(500);
         }
     }
 
     private hitPulse() {
-        this.element.classList.add('active');
-        setTimeout(() => {
-            this.element.classList.remove('active');
-        }, 1000)
-    }
-
-    private handleInvincibility(duration: number) {
-        // this.isInvincible = true;
-        this.element.classList.add('active');
         InfoBar.startHitPulse();
+        this.element.classList.add('active');
         setTimeout(() => {
-            // this.isInvincible = false;
             this.element.classList.remove('active');
             InfoBar.stopHitPulse();
-        }, duration)
+        }, 500);
     }
 
     public getPulled(vertical: number, horizontal: number) {
