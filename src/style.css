@@ -249,3 +249,73 @@ body, html {
 .rotating-element {
   animation: rotate 20s linear infinite;
 }
+
+#game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#game-over-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+#game-over-title {
+  font-size: 120px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  letter-spacing: 10px;
+  animation: pulse-glow 1s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+  50% {
+    text-shadow: 0 0 40px rgba(255, 215, 0, 1);
+  }
+}
+
+#game-over-score {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.87);
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+#restart-button {
+  font-size: 32px;
+  font-weight: bold;
+  padding: 20px 60px;
+  background-color: #FFD700;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 2px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+#restart-button:hover {
+  background-color: #FFF;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 1);
+  transform: scale(1.05);
+}
+
+#restart-button:active {
+  transform: scale(0.95);
+}

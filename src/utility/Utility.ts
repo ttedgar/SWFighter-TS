@@ -1,4 +1,4 @@
-import {root} from "./Root.ts";
+import {GameOverScreen} from "../infobar/GameOverScreen.ts";
 
 export class Utility{
 
@@ -10,9 +10,8 @@ export class Utility{
     return Math.random() * (to - from) + from;
   }
 
-  public static gameOver() {
-    root.textContent = '';
-    root.textContent = 'GAME OVER!';
+  public static gameOver(score: number = 0) {
+    GameOverScreen.show(score);
   }
 
   public static convertTime(time: number, divider: number = 100): number {

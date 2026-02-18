@@ -47,6 +47,7 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
 
   public run() {
     this.xWing.setShotManager(this);
+    this.xWing.setScoringManager(this);
     this.shipFactory.setShipManager(this);
     this.hitDetector.setUp(this, this, this)
     this.shipHandler.setShipManager(this);

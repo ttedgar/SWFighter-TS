@@ -5,6 +5,7 @@ import {Border} from "../utility/Border.ts";
 import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 import {PlayerShot} from "../shot/PlayerShot.ts";
 import {InfoBar} from "../infobar/InfoBar.ts";
+import {ScoringManager} from "../game/ScoringManager.ts";
 
 export class XWing extends Ship {
     static readonly TIME_DIVIDER: number = 25;
@@ -15,6 +16,7 @@ export class XWing extends Ship {
     private isInvincible: boolean;
     private lastTime: number;
     private static readonly SPEED: number = 10;
+    private scoringManager?: ScoringManager;
 
 
     constructor(element: HTMLElement, hp: number, eventHandler: EventHandler) {
@@ -62,7 +64,12 @@ export class XWing extends Ship {
     }
 
     public die() {
-        // Utility.gameOver();
+        const score = this.scoringManager?.getScore() ?? 0;
+        Utility.gameOver(score);
+    }
+
+    public setScoringManager(scoringManager: ScoringManager) {
+        this.scoringManager = scoringManager;
     }
 
     public getHit() {
