@@ -9,11 +9,13 @@ export class Deathstar extends Ship {
     private readonly static INITIAL_SPEED: number = 2;
     private laser: HTMLElement;
     private _isLaserActive: boolean;
+    private _isDead: boolean;
 
     constructor(element: HTMLElement) {
         super(element, Deathstar.WIDTH, Deathstar.HEIGHT, Deathstar.HP, Deathstar.INITIAL_SPEED, true);
         this.laser = EffectFactory.createDeathLaserHtml();
         this._isLaserActive = false;
+        this._isDead = false;
     }
 
     private moveDown () {
@@ -37,6 +39,7 @@ export class Deathstar extends Ship {
     }
 
     public move() {
+        if (this._isDead) return;
         this.moveDown();
         this.moveUp();
     }
@@ -55,7 +58,7 @@ export class Deathstar extends Ship {
 
     public die() {
         this._shipManager.removeShip(this);
-        this.move = () => {};
+        this._isDead = true;
         this.laser.remove();
         const img: HTMLImageElement = this.element as HTMLImageElement;
         img.src = './images/deathstar-ruin.png';
