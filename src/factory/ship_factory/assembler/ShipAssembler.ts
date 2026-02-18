@@ -6,9 +6,6 @@ export abstract class ShipAssembler{
     constructor(shipManager: ShipManager) {
         this.shipManager = shipManager;
     }
-
-    abstract create(timeOfAppearance: number, horizontalPosition: number, time: number, angleModifier: number, hp?: number);
-
 }
 
 
