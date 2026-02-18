@@ -30,7 +30,7 @@ export class XWing extends Ship {
         this.shoot(time);
     }
 
-    private shoot(time: number) {
+    public shoot(time: number): void {
         if (this.eventHandler.shoot &&
             Math.round(time / XWing.TIME_DIVIDER) % XWing.SHOOT_INTERVAL === 0 &&
             Math.round(this.lastTime / XWing.TIME_DIVIDER) !== Math.round(time / XWing.TIME_DIVIDER)) {
@@ -39,7 +39,7 @@ export class XWing extends Ship {
         }
     }
 
-    private move() {
+    public move(): void {
         if (this.eventHandler.up && Border.topBorder(this.style)) {
             this.style.top = Utility.positionToNumber(this.style.top) - XWing.SPEED + 'px';
         }

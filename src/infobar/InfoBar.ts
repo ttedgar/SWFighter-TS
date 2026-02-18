@@ -11,9 +11,9 @@ export class InfoBar {
     }
 
     public static displayLives(playerHP: number) {
-        const lives = document.getElementById('lives');
+        const lives = document.getElementById('lives') as HTMLElement;
         for (let i = 0; i < playerHP; i++) {
-            const life = ElementCreator.appendElement(lives, 'img', 'life', null, {src: './images/Luke.png'});
+            ElementCreator.appendElement(lives, 'img', 'life', null, {src: './images/Luke.png'});
         }
     }
 
@@ -30,10 +30,16 @@ export class InfoBar {
     }
 
     public static startHitPulse() {
-        document.getElementById('lives').classList.add('active');
+        const lives = document.getElementById('lives');
+        if (lives) {
+            lives.classList.add('active');
+        }
     }
 
     public static stopHitPulse() {
-        document.getElementById('lives').classList.remove('active');
+        const lives = document.getElementById('lives');
+        if (lives) {
+            lives.classList.remove('active');
+        }
     }
 }

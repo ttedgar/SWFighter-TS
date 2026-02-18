@@ -20,7 +20,7 @@ export class ElementCreator {
             elementName.textContent = text;
         }
         for (const attribute in attributes) {
-            elementName[attribute] = attributes[attribute];
+            elementName.setAttribute(attribute, String(attributes[attribute]));
         }
         return elementName;
     }

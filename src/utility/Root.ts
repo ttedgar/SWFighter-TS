@@ -1,1 +1,1 @@
-export const root : HTMLElement = document.getElementById('root');
+export const root = document.getElementById('root') as HTMLElement;

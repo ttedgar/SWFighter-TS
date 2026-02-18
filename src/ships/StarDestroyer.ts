@@ -17,7 +17,6 @@ export class StarDestroyer extends Ship {
     private lastDroneTime: number;
     private lastShotTime: number;
     private beam: TractorBeam;
-    private isBeamOn: boolean;
     private isDroneUp: boolean;
 
     constructor(element: HTMLElement, isDown: boolean = true, speedLeft: number = StarDestroyer.HORIZONTAL_SPEED) {
@@ -26,7 +25,6 @@ export class StarDestroyer extends Ship {
         this.lastDroneTime = 0;
         this.lastShotTime = 0;
         this.beam = new TractorBeam(EffectFactory.createTractorBeam(this.element));
-        this.isBeamOn = false;
         this.isDroneUp = true;
     }
 

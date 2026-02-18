@@ -4,8 +4,8 @@ import {Missile} from "./Missile.ts";
 import {KamikazeDrone} from "./KamikazeDrone.ts";
 
 export class ShotHandler{
-    private _shotManager: ShotManager;
-    private _shipManager: ShipManager;
+    private _shotManager!: ShotManager;
+    private _shipManager!: ShipManager;
 
     public setUp(shotManager: ShotManager, shipManager: ShipManager) {
         this._shotManager = shotManager;

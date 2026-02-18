@@ -45,7 +45,7 @@ export class Asteroid extends Ship {
     }
 
     private moveVertical () {
-        this.style.top = Utility.positionToNumber(this.style.top) + this.verticalSpeed + 'px';
+        this.style.top = Utility.positionToNumber(this.style.top) + (this.verticalSpeed ?? 0) + 'px';
         if (Utility.positionToNumber(this.style.top) > window.innerHeight - 50) {
             this.isDown = false;
         }
@@ -72,7 +72,7 @@ export class Asteroid extends Ship {
         this.disappear();
     }
 
-    shoot(time: number) {
+    shoot() {
     }
 
 }

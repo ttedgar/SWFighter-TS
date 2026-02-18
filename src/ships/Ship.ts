@@ -8,8 +8,8 @@ export abstract class Ship {
     private _width: number;
     private _height: number;
     protected _hp: number;
-    protected _shotManager: ShotManager;
-    protected _shipManager: ShipManager;
+    protected _shotManager!: ShotManager;
+    protected _shipManager!: ShipManager;
     protected verticalSpeed?: number;
     protected isDown?: boolean;
 
@@ -23,8 +23,8 @@ export abstract class Ship {
         this.isDown = isDown ?? false;
     }
 
-    public abstract move();
-    public abstract shoot(time: number);
+    public abstract move(): void;
+    public abstract shoot(time: number): void;
 
     public getVerticalPosition() : number {
         return Utility.positionToNumber(this.style.top);
@@ -50,7 +50,7 @@ export abstract class Ship {
         }
     }
 
-    public abstract die();
+    public abstract die(): void;
 
     public setShotManager(shotManager: ShotManager) {
         if (!this._shotManager) {
@@ -73,13 +73,13 @@ export abstract class Ship {
 
     protected bounceVertically(): void {
         if (this.isDown) {
-            this.style.top = Utility.positionToNumber(this.style.top) + this.verticalSpeed + 'px';
+            this.style.top = Utility.positionToNumber(this.style.top) + (this.verticalSpeed ?? 0) + 'px';
             if (Utility.positionToNumber(this.style.top) > window.innerHeight - 50) {
                 this.isDown = false;
             }
         }
         if (!this.isDown) {
-            this.style.top = Utility.positionToNumber(this.style.top) - this.verticalSpeed + 'px';
+            this.style.top = Utility.positionToNumber(this.style.top) - (this.verticalSpeed ?? 0) + 'px';
             if (Utility.positionToNumber(this.style.top) < 0) {
                 this.isDown = true;
             }

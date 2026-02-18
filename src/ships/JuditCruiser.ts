@@ -11,17 +11,14 @@ export class JuditCruiser extends Ship {
     private static readonly HEIGHT: number = 25;
     private static readonly VERTICAL_SPEED: number = 3;
     private static readonly HORIZONTAL_SPEED: number = 3;
-    private static readonly LEFT_POSITION_OF_DISAPPEARANCE: number = -50;
-    private speedLeft: number;
     private lastShotTime: number;
     private isVortexOn: boolean;
     private isTeleportOn: boolean;
     private vortex1: HTMLElement;
     private vortex2: HTMLElement;
 
-    constructor(element: HTMLElement, isDown: boolean = true, speedLeft: number = JuditCruiser.HORIZONTAL_SPEED) {
+    constructor(element: HTMLElement, isDown: boolean = true, _speedLeft: number = JuditCruiser.HORIZONTAL_SPEED) {
         super(element, JuditCruiser.WIDTH, JuditCruiser.HEIGHT, JuditCruiser.HP, JuditCruiser.VERTICAL_SPEED, isDown);
-        this.speedLeft = speedLeft;
         this.lastShotTime = 0;
         this.isVortexOn = false;
         this.isTeleportOn = true;

@@ -1,7 +1,7 @@
 import {ShipManager} from "../game/ShipManager.ts";
 
 export class ShipHandler{
-    private _shipManager: ShipManager;
+    private _shipManager!: ShipManager;
 
 
     public setShipManager(value: ShipManager) {

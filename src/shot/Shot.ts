@@ -11,7 +11,7 @@ export abstract class Shot {
         this.explosionSize = explosionSize;
     }
 
-    abstract fly(time: number);
+    abstract fly(time: number): void;
 
 
     get element(): HTMLElement {

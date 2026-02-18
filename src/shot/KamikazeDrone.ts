@@ -5,13 +5,11 @@ import {Homing} from "./Homing.ts";
 
 export class KamikazeDrone extends Shot implements Homing {
     private distance: number;
-    private xWing: XWing;
     private isUp: boolean;
-    constructor(element: HTMLElement, xWing: XWing, isUp: boolean) {
+    constructor(element: HTMLElement, _xWing: XWing, isUp: boolean) {
         super(element);
         this.isUp = isUp;
         this.distance = isUp ? 10 : -10;
-        this.xWing = xWing;
     }
 
     public fly(time: number) {

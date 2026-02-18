@@ -1,3 +1,3 @@
 export interface Homing{
-    homing(xWingVerticalPosition: number, xWingHorizontalPosition: number);
+    homing(xWingVerticalPosition: number, xWingHorizontalPosition: number): void;
 }

@@ -3,10 +3,10 @@ import {Ship} from "./Ship.ts"
 import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 
 export class Deathstar extends Ship {
-    private readonly static HEIGHT: number = 200;
-    private readonly static WIDTH: number = -20;
-    private readonly static HP: number = 50;
-    private readonly static INITIAL_SPEED: number = 2;
+    private static readonly HEIGHT: number = 200;
+    private static readonly WIDTH: number = -20;
+    private static readonly HP: number = 50;
+    private static readonly INITIAL_SPEED: number = 2;
     private laser: HTMLElement;
     private _isLaserActive: boolean;
     private _isDead: boolean;
@@ -20,7 +20,7 @@ export class Deathstar extends Ship {
 
     private moveDown () {
         if (this.isDown) {
-            this.style.top = Utility.positionToNumber(this.style.top) + this.verticalSpeed + 'px';
+            this.style.top = Utility.positionToNumber(this.style.top) + (this.verticalSpeed ?? 0) + 'px';
             if (Utility.positionToNumber(this.style.top) > window.innerHeight - 200) {
                 this.isDown = false;
                 this.verticalSpeed = Utility.rng(1, 3)
@@ -30,7 +30,7 @@ export class Deathstar extends Ship {
 
     private moveUp () {
         if (!this.isDown) {
-            this.style.top = Utility.positionToNumber(this.style.top) - this.verticalSpeed + 'px';
+            this.style.top = Utility.positionToNumber(this.style.top) - (this.verticalSpeed ?? 0) + 'px';
             if (Utility.positionToNumber(this.style.top) < 0) {
                 this.isDown = true;
                 this.verticalSpeed = Utility.rng(1, 3)

@@ -5,7 +5,6 @@ import {EventHandler} from "../event_handler/EventHandler.ts";
 import {PlayerShot} from "../shot/PlayerShot.ts";
 import {ShotManager} from "./ShotManager.ts";
 import {ShipManager} from "./ShipManager.ts";
-import {Event} from "../events/Event.ts";
 import {InfoBar} from "../infobar/InfoBar.ts";
 import {ShipFactory} from "../factory/ship_factory/ShipFactory.ts";
 import {HitController} from "./HitController.ts";
@@ -17,13 +16,11 @@ import {ShotHandler} from "../shot/ShotHandler.ts";
 export class GameLogic implements ShotManager, ShipManager{
   private lastTime: number;
   private time: number;
-  private deltaTime: number;
   private ships: Ship[];
   private xWing: XWing;
   private eventHandler: EventHandler;
   private playerShots: PlayerShot[];
   private enemyShots: Shot[];
-  private events: Event;
   private shipFactory: ShipFactory;
   private hitDetector: HitController;
   private shipHandler: ShipHandler;
@@ -32,8 +29,6 @@ export class GameLogic implements ShotManager, ShipManager{
   constructor() {
     this.lastTime = 0;
     this.time = 0;
-    this.deltaTime = 0;
-    this.events = new Event();
     this.ships = [];
     this.playerShots = [];
     this.enemyShots = [];
@@ -92,7 +87,6 @@ export class GameLogic implements ShotManager, ShipManager{
       this.lastTime = timeStamp;
     }
     this.time = Math.round(timeStamp);
-    this.deltaTime = timeStamp - this.lastTime;
     this.lastTime = timeStamp;
   }
 

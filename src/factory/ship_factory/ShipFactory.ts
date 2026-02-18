@@ -8,16 +8,14 @@ import {AsteroidAssembler} from "./assembler/AsteroidAssembler.ts";
 import {Utility} from "../../utility/Utility.ts";
 
 export class ShipFactory{
-    private shipManager: ShipManager;
-    private tieAssembler: TieFighterAssembler;
-    private deathstarAssembler: DeathstarAssembler;
-    private shuttleAssembler: ShutterAssembler;
-    private starDestroyerAssembler: StarDestroyerAssembler;
-    private teleporterAssembler: JuditCruiserAssembler;
-    private asteroidAssembler: AsteroidAssembler;
+    private tieAssembler!: TieFighterAssembler;
+    private deathstarAssembler!: DeathstarAssembler;
+    private shuttleAssembler!: ShutterAssembler;
+    private starDestroyerAssembler!: StarDestroyerAssembler;
+    private teleporterAssembler!: JuditCruiserAssembler;
+    private asteroidAssembler!: AsteroidAssembler;
 
     public setShipManager(shipManager: ShipManager) {
-        this.shipManager = shipManager;
         this.tieAssembler = new TieFighterAssembler(shipManager);
         this.deathstarAssembler = new DeathstarAssembler(shipManager);
         this.shuttleAssembler = new ShutterAssembler(shipManager);

@@ -9,9 +9,7 @@ export class Shuttle extends Ship {
     private static readonly WIDTH: number = 0;
     private static readonly HEIGHT: number = 60;
     private static readonly VERTICAL_SPEED: number = 3;
-    private static readonly HORIZONTAL_SPEED: number = 3;
     private static readonly LEFT_POSITION_OF_DISAPPEARANCE: number = -100;
-    private speedLeft: number;
     private lastShotTime: number;
     private angle: number;
     private angleModifier: number;
@@ -19,7 +17,6 @@ export class Shuttle extends Ship {
 
     constructor(element: HTMLElement, isDown: boolean = true, angleModifier: number = 1) {
         super(element, Shuttle.WIDTH, Shuttle.HEIGHT, Shuttle.HP, Shuttle.VERTICAL_SPEED, isDown);
-        this.speedLeft = Shuttle.HORIZONTAL_SPEED;
         this.lastShotTime = 0;
         this.angle = 0;
         this.stepSize = 2;

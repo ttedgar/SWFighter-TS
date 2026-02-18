@@ -9,8 +9,8 @@ import {Asteroid} from "../ships/Asteroid.ts";
 import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 
 export class HitController {
-    private shotManager: ShotManager;
-    private shipManager: ShipManager;
+    private shotManager!: ShotManager;
+    private shipManager!: ShipManager;
 
     public setUp(shotManager: ShotManager, shipManager: ShipManager) {
         this.shotManager = shotManager;

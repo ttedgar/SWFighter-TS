@@ -1,7 +1,3 @@
-import {Ship} from "../ships/Ship.ts";
-import {Shot} from "../shot/Shot.ts";
-import {Deathstar} from "../ships/Deathstar.ts";
-import {XWing} from "../ships/XWing.ts";
 import {root} from "./Root.ts";
 
 export class Utility{
