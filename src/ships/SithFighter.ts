@@ -6,9 +6,9 @@ import {TieShot} from "../shot/TieShot.ts";
 import {BlasterShot} from "../shot/BlasterShot.ts";
 
 export class SithFighter extends Ship {
-    private static readonly HP: number = 1;
-    private static readonly WIDTH: number = -10;
-    private static readonly HEIGHT: number = 25;
+    private static readonly HP: number = 20;
+    private static readonly WIDTH: number = -15;
+    private static readonly HEIGHT: number = 35;
     private static readonly VERTICAL_SPEED: number = 3;
     private static readonly HORIZONTAL_SPEED: number = 3;
     private lastShotTime: number;
@@ -45,7 +45,15 @@ export class SithFighter extends Ship {
         }
     }
 
-    die() {
+    public die() {
+        this._shipManager.removeShip(this);
+        const shotImg: HTMLImageElement = this.element as HTMLImageElement;
+        shotImg.src = './images/explosion.gif';
+        this.element.style.width = '100px';
+        this.element.style.height = '100px';
+        setTimeout(() => {
+            this.element.remove();
+        }, 500)
     }
 
     private vortexAppear() {
