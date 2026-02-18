@@ -1,6 +1,7 @@
 import {Ship} from "./Ship.ts";
 import {EffectFactory} from "../factory/html_creator/EffectCreator.ts";
 import {Utility} from "../utility/Utility.ts";
+import {VectorMath} from "../utility/VectorMath.ts";
 import {TieShot} from "../shot/TieShot.ts";
 import {BlasterShot} from "../shot/BlasterShot.ts";
 
@@ -28,31 +29,22 @@ export class JuditCruiser extends Ship {
         this.vortex2 = EffectFactory.createVortex2(this.element);
     }
 
-    private calculateVerticalDistance(): number {
-        return this.getVerticalPosition() - this._shipManager.getXWing().getVerticalPosition();
-    }
-    private calculateHorizontalDistance(): number {
-        return this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition();
-    }
-
-    private calculateSumOfLegs(): number {
-        return Math.abs(this.calculateVerticalDistance()) + Math.abs(this.calculateHorizontalDistance());
-    }
-
-    private calculateRatio(): number {
-        const ratioOfVertical: number = Math.abs(this.calculateVerticalDistance()) / this.calculateSumOfLegs();
-        return this.calculateVerticalDistance() < 0 ? ratioOfVertical * -10 : ratioOfVertical * 10;
-    }
-
     private rotateShip(): void {
         if (this._shipManager) {
+            const [verticalVel] = VectorMath.aimVector(
+                this.getVerticalPosition(),
+                this.getHorizontalPosition(),
+                this._shipManager.getXWing().getVerticalPosition(),
+                this._shipManager.getXWing().getHorizontalPosition()
+            );
             let rotation: number = 0;
-            if (this.calculateHorizontalDistance() > 0) {
-                rotation = this.calculateRatio() * 9;
-            } else if (this.calculateHorizontalDistance() < 0) {
-                rotation = this.calculateRatio() * -9 + 180;
+            const hDist = this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition();
+            if (hDist > 0) {
+                rotation = verticalVel * 9;
+            } else if (hDist < 0) {
+                rotation = verticalVel * -9 + 180;
             }
-            this.element.style.transform = `rotate(${rotation}deg)`
+            this.element.style.transform = `rotate(${rotation}deg)`;
         }
     }
 
@@ -127,43 +119,25 @@ export class JuditCruiser extends Ship {
         this.teleport();
     }
 
-    private calculateVerticalDistance(): number {
-        return this.getVerticalPosition() - this._shipManager.getXWing().getVerticalPosition() - this._shipManager.getXWing().height/3;
-    }
-    private calculateHorizontalDistance(): number {
-        return this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition() + this._shipManager.getXWing().width*3;
-    }
-
-    private calculateSumOfLegs(): number {
-        return Math.abs(this.calculateVerticalDistance()) + Math.abs(this.calculateHorizontalDistance());
-    }
-
-    private calculateBlasterVerticalVelocity(): number {
-        const ratioOfVertical: number = Math.abs(this.calculateVerticalDistance()) / this.calculateSumOfLegs();
-        return this.calculateVerticalDistance() < 0 ? ratioOfVertical * -10 : ratioOfVertical * 10;
-    }
-
-    private calculateBlasterHorizontalVelocity(): number {
-        const ratioOfHorizontal: number = Math.abs(this.calculateHorizontalDistance()) / this.calculateSumOfLegs();
-        return this.calculateHorizontalDistance() < 0 ? ratioOfHorizontal * -10 : ratioOfHorizontal * 10;
-    }
-
-    private setRotationOfBlasterShot(shotHtml: HTMLElement): void {
-        let rotation: number = 0;
-        if (this.calculateHorizontalDistance() > 0) {
-            rotation = this.calculateBlasterVerticalVelocity() * 9;
-        } else if (this.calculateHorizontalDistance() < 0) {
-            rotation = this.calculateBlasterVerticalVelocity() * -9 + 180;
-        }
-        shotHtml.style.transform = `rotate(${rotation}deg)`
-    }
-
     shoot(time: number) {
         if (Utility.isTimeTo(time, 1, this.lastShotTime) && this._shipManager && this._shotManager && this.isTeleportOn) {
             this.lastShotTime = Utility.convertTime(time);
             const shotHtml: HTMLElement = EffectFactory.createJuditCruiserShot(this.element);
-            this.setRotationOfBlasterShot(shotHtml);
-            const shot: TieShot = new BlasterShot(shotHtml, this.calculateBlasterVerticalVelocity(), this.calculateBlasterHorizontalVelocity())
+            const [verticalVel, horizontalVel] = VectorMath.aimVector(
+                this.getVerticalPosition(),
+                this.getHorizontalPosition(),
+                this._shipManager.getXWing().getVerticalPosition() - this._shipManager.getXWing().height/3,
+                this._shipManager.getXWing().getHorizontalPosition() + this._shipManager.getXWing().width*3
+            );
+            let rotation: number = 0;
+            const hDist = this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition() - this._shipManager.getXWing().width*3;
+            if (hDist > 0) {
+                rotation = verticalVel * 9;
+            } else if (hDist < 0) {
+                rotation = verticalVel * -9 + 180;
+            }
+            shotHtml.style.transform = `rotate(${rotation}deg)`;
+            const shot: TieShot = new BlasterShot(shotHtml, verticalVel, horizontalVel);
             this._shotManager.registerShot(shot);
         }
     }
