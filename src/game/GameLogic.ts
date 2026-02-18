@@ -12,6 +12,9 @@ import {Shot} from "../shot/Shot.ts";
 import {ShipHandler} from "../ships/ShipHandler.ts";
 import {ShotHandler} from "../shot/ShotHandler.ts";
 import {ScoringManager} from "./ScoringManager.ts";
+import {Utility} from "../utility/Utility.ts";
+import {SithFighter} from "../ships/SithFighter.ts";
+import {VictoryScreen} from "../infobar/VictoryScreen.ts";
 
 
 export class GameLogic implements ShotManager, ShipManager, ScoringManager {
@@ -27,6 +30,7 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
   private shipHandler: ShipHandler;
   private shotHandler: ShotHandler;
   private score: number;
+  private sithFighterDefeated: boolean;
 
   constructor() {
     this.lastTime = 0;
@@ -35,6 +39,7 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
     this.playerShots = [];
     this.enemyShots = [];
     this.score = 0;
+    this.sithFighterDefeated = false;
     this.eventHandler = new EventHandler();
     this.xWing = new XWing(ShipCreator.createXWingHtml(), 10, this.eventHandler);
     this.shipFactory = new ShipFactory();
@@ -59,6 +64,7 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
   private gameLoop = (timeStamp: number) => {
     this.giveShipsManager();
     this.countTime(timeStamp);
+    this.checkVictory();
     this.hitDetector.checkForHits();
     this.shotHandler.moveShots(this.time);
     this.xWing.handleXWing(this.time);
@@ -67,14 +73,31 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
   }
 
   private createShips() {
-    // this.shipFactory.createDeathStar(10, this.time);
-    // this.shipFactory.createTieSwarm(20, 0, this.time, 10, 5)
-    // this.shipFactory.createTieSwarm(40, window.innerHeight, this.time, 10, 5)
-    // this.shipFactory.createShuttle(21, 500, this.time, 1);
-    // this.shipFactory.createShuttle(20, 300, this.time, -1);
-    // this.shipFactory.createStarDestroyer(5, window.innerHeight/2, this.time);
-    this.shipFactory.createSithFighter(5, window.innerHeight/5, this.time);
-    // this.shipFactory.generateAsteroids(10, 10, this.time);
+    // Training phase: asteroids to warm up
+    this.shipFactory.generateAsteroids(8, 15, this.time);
+
+    // First enemy: TieFighter swarms
+    this.shipFactory.createTieSwarm(100, window.innerHeight / 4, this.time, 10, 8);
+    this.shipFactory.createTieSwarm(200, (window.innerHeight * 3) / 4, this.time, 10, 8);
+
+    // Mid-game: Shuttles
+    this.shipFactory.createShuttle(300, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
+    this.shipFactory.createShuttle(400, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
+    this.shipFactory.createShuttle(500, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
+
+    // Mid-game: Star Destroyer
+    this.shipFactory.createStarDestroyer(700, window.innerHeight / 2, this.time);
+
+    // Late-game: Deathstar defended by TieFighters and Shuttles
+    this.shipFactory.createDeathStar(1000, this.time);
+    this.shipFactory.createTieSwarm(900, window.innerHeight / 4, this.time, 8, 10);
+    this.shipFactory.createTieSwarm(901, (window.innerHeight * 3) / 4, this.time, 8, 10);
+    this.shipFactory.createShuttle(950, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
+    this.shipFactory.createShuttle(951, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
+
+    // Final boss: SithFighter
+    this.shipFactory.createSithFighter(1300, window.innerHeight / 2, this.time);
+
     this.shipHandler.act(this.time);
   }
 
@@ -152,5 +175,21 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
 
   public getScore(): number {
     return this.score;
+  }
+
+  private checkVictory(): void {
+    if (!this.sithFighterDefeated) {
+      const hasSithFighter = this.ships.some(ship => ship instanceof SithFighter);
+      const hadSithFighter = this.ships.length > 0 && this.ships.some(ship => ship instanceof SithFighter);
+
+      if (!hasSithFighter && hadSithFighter) {
+        this.sithFighterDefeated = true;
+      }
+    }
+  }
+
+  public triggerVictory(): void {
+    this.sithFighterDefeated = true;
+    VictoryScreen.show(this.score);
   }
 }

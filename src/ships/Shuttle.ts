@@ -5,7 +5,7 @@ import {TieShot} from "../shot/TieShot.ts";
 import {Missile} from "../shot/Missile.ts";
 
 export class Shuttle extends Ship {
-    private static readonly HP: number = 40;
+    private static readonly HP: number = 20;
     private static readonly WIDTH: number = 0;
     private static readonly HEIGHT: number = 60;
     private static readonly VERTICAL_SPEED: number = 3;

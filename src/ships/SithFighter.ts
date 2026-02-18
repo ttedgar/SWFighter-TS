@@ -6,7 +6,7 @@ import {TieShot} from "../shot/TieShot.ts";
 import {BlasterShot} from "../shot/BlasterShot.ts";
 
 export class SithFighter extends Ship {
-    private static readonly HP: number = 20;
+    private static readonly HP: number = 40;
     private static readonly WIDTH: number = -15;
     private static readonly HEIGHT: number = 35;
     private static readonly VERTICAL_SPEED: number = 3;
@@ -53,6 +53,9 @@ export class SithFighter extends Ship {
         this.element.style.height = '100px';
         setTimeout(() => {
             this.element.remove();
+            if ('triggerVictory' in this._shipManager) {
+                (this._shipManager as any).triggerVictory();
+            }
         }, 500)
     }
 

@@ -33,7 +33,7 @@ export class ShipCreator {
         shuttleStyle.height = '80px';
         shuttleStyle.position = 'fixed';
         shuttleStyle.top = verticalPosition + 'px'
-        shuttleStyle.left = window.innerWidth - 300 + 'px';
+        shuttleStyle.left = window.innerWidth + 'px';
         return shuttle;
     }
 
