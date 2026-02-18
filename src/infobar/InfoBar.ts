@@ -7,7 +7,9 @@ export class InfoBar {
     public static createInfoBar(playerHp: number) {
         const infoBar: HTMLElement = ElementCreator.appendElement(root, 'div', 'infobar', null, {id: 'infobar'});
         ElementCreator.appendElement(infoBar, 'div', 'lives', null, {id: 'lives'});
+        ElementCreator.appendElement(infoBar, 'div', 'score-display', null, {id: 'score'});
         InfoBar.displayLives(playerHp);
+        InfoBar.updateScore(0);
     }
 
     public static displayLives(playerHP: number) {
@@ -40,6 +42,13 @@ export class InfoBar {
         const lives = document.getElementById('lives');
         if (lives) {
             lives.classList.remove('active');
+        }
+    }
+
+    public static updateScore(score: number) {
+        const scoreElement = document.getElementById('score');
+        if (scoreElement) {
+            scoreElement.textContent = `Score: ${score}`;
         }
     }
 }

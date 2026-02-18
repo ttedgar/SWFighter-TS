@@ -143,6 +143,17 @@ body, html {
   height: 30px;
 }
 
+#score {
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.87);
+}
+
 #lives.active {
   animation: appearDisappear 1s forwards;
 }

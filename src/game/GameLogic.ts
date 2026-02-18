@@ -11,9 +11,10 @@ import {HitController} from "./HitController.ts";
 import {Shot} from "../shot/Shot.ts";
 import {ShipHandler} from "../ships/ShipHandler.ts";
 import {ShotHandler} from "../shot/ShotHandler.ts";
+import {ScoringManager} from "./ScoringManager.ts";
 
 
-export class GameLogic implements ShotManager, ShipManager{
+export class GameLogic implements ShotManager, ShipManager, ScoringManager {
   private lastTime: number;
   private time: number;
   private ships: Ship[];
@@ -25,6 +26,7 @@ export class GameLogic implements ShotManager, ShipManager{
   private hitDetector: HitController;
   private shipHandler: ShipHandler;
   private shotHandler: ShotHandler;
+  private score: number;
 
   constructor() {
     this.lastTime = 0;
@@ -32,6 +34,7 @@ export class GameLogic implements ShotManager, ShipManager{
     this.ships = [];
     this.playerShots = [];
     this.enemyShots = [];
+    this.score = 0;
     this.eventHandler = new EventHandler();
     this.xWing = new XWing(ShipCreator.createXWingHtml(), 10, this.eventHandler);
     this.shipFactory = new ShipFactory();
@@ -45,7 +48,7 @@ export class GameLogic implements ShotManager, ShipManager{
   public run() {
     this.xWing.setShotManager(this);
     this.shipFactory.setShipManager(this);
-    this.hitDetector.setUp(this, this)
+    this.hitDetector.setUp(this, this, this)
     this.shipHandler.setShipManager(this);
     this.shotHandler.setUp(this, this);
     InfoBar.createInfoBar(this.xWing.hp);
@@ -64,12 +67,12 @@ export class GameLogic implements ShotManager, ShipManager{
 
   private createShips() {
     // this.shipFactory.createDeathStar(10, this.time);
-    this.shipFactory.createTieSwarm(20, 0, this.time, 10, 5)
+    // this.shipFactory.createTieSwarm(20, 0, this.time, 10, 5)
     // this.shipFactory.createTieSwarm(40, window.innerHeight, this.time, 10, 5)
     // this.shipFactory.createShuttle(21, 500, this.time, 1);
     // this.shipFactory.createShuttle(20, 300, this.time, -1);
     // this.shipFactory.createStarDestroyer(5, window.innerHeight/2, this.time);
-    // this.shipFactory.createSithFighter(5, window.innerHeight/5, this.time);
+    this.shipFactory.createSithFighter(5, window.innerHeight/5, this.time);
     // this.shipFactory.generateAsteroids(10, 10, this.time);
     this.shipHandler.act(this.time);
   }
@@ -138,5 +141,15 @@ export class GameLogic implements ShotManager, ShipManager{
 
   public removeShot(shotToRemove: Shot): void {
     this.enemyShots = this.enemyShots.filter(shot => shotToRemove !== shot);
+  }
+
+  //ScoringManager methods:
+  public addScore(points: number): void {
+    this.score += points;
+    InfoBar.updateScore(this.score);
+  }
+
+  public getScore(): number {
+    return this.score;
   }
 }
