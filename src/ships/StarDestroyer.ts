@@ -41,24 +41,6 @@ export class StarDestroyer extends Ship {
         }, 500)
     }
 
-    private moveDown () {
-        if (this.isDown) {
-            this.style.top = Utility.positionToNumber(this.style.top) + this.verticalSpeed + 'px';
-            if (Utility.positionToNumber(this.style.top) > window.innerHeight - 50) {
-                this.isDown = false;
-            }
-        }
-    }
-
-    private moveUp () {
-        if (!this.isDown) {
-            this.style.top = Utility.positionToNumber(this.style.top) - this.verticalSpeed + 'px';
-            if (Utility.positionToNumber(this.style.top) < 0) {
-                this.isDown = true;
-            }
-        }
-    }
-
     private moveLeft() {
         if (Utility.positionToNumber(this.style.left) > window.innerWidth / 1.5) {
             this.style.left = Utility.positionToNumber(this.style.left) - this.speedLeft + 'px';
@@ -74,8 +56,7 @@ export class StarDestroyer extends Ship {
     }
 
     public move() {
-        // this.moveDown();
-        // this.moveUp();
+        this.bounceVertically();
         this.moveLeft();
         this.beam.updatePosition(Utility.positionToNumber(this.element.style.top), Utility.positionToNumber(this.element.style.left))
     }

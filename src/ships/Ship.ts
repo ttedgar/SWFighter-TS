@@ -70,6 +70,21 @@ export abstract class Ship {
     get element(): HTMLElement {
         return this._element;
     }
+
+    protected bounceVertically(): void {
+        if (this.isDown) {
+            this.style.top = Utility.positionToNumber(this.style.top) + this.verticalSpeed + 'px';
+            if (Utility.positionToNumber(this.style.top) > window.innerHeight - 50) {
+                this.isDown = false;
+            }
+        }
+        if (!this.isDown) {
+            this.style.top = Utility.positionToNumber(this.style.top) - this.verticalSpeed + 'px';
+            if (Utility.positionToNumber(this.style.top) < 0) {
+                this.isDown = true;
+            }
+        }
+    }
 }
 
 
