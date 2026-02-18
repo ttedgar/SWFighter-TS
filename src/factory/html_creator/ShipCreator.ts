@@ -47,15 +47,15 @@ export class ShipCreator {
         return starDestroyer;
     }
 
-    public static createTeleporter(verticalPosition: number) : HTMLElement {
-        const teleporter = ElementCreator.appendElement(root, 'img', 'teleporter', null, {src: './images/teleporter.png'});
-        let teleporterStyle = teleporter.style;
-        teleporterStyle.zIndex = '2';
-        verticalPosition ? teleporterStyle.top = verticalPosition + 'px' : null;
-        teleporterStyle.height = '30px';
-        teleporterStyle.position = 'fixed';
-        teleporterStyle.left = window.innerWidth/2 + 400 + 'px';
-        return teleporter;
+    public static createSithFighter(verticalPosition: number) : HTMLElement {
+        const sithFighter = ElementCreator.appendElement(root, 'img', 'teleporter', null, {src: './images/teleporter.png'});
+        let sithFighterStyle = sithFighter.style;
+        sithFighterStyle.zIndex = '2';
+        verticalPosition ? sithFighterStyle.top = verticalPosition + 'px' : null;
+        sithFighterStyle.height = '30px';
+        sithFighterStyle.position = 'fixed';
+        sithFighterStyle.left = window.innerWidth/2 + 400 + 'px';
+        return sithFighter;
     }
 
     public static createAsteroid(verticalPosition: number, height: number) : HTMLElement {

@@ -74,7 +74,7 @@ export class EffectFactory{
         return shot;
     }
 
-    public static createJuditCruiserShot(tie: HTMLElement): HTMLElement {
+    public static createSithFighterShot(tie: HTMLElement): HTMLElement {
         const shot = ElementCreator.appendElement(root, 'img', 'tieShot', null, {src: './images/TIEshot.png'});
         shot.style.position = 'absolute';
         shot.style.height = '5px';

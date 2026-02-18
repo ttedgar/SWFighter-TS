@@ -69,7 +69,7 @@ export class GameLogic implements ShotManager, ShipManager{
     // this.shipFactory.createShuttle(21, 500, this.time, 1);
     // this.shipFactory.createShuttle(20, 300, this.time, -1);
     // this.shipFactory.createStarDestroyer(5, window.innerHeight/2, this.time);
-    // this.shipFactory.createJuditCruiser(5, window.innerHeight/5, this.time);
+    // this.shipFactory.createSithFighter(5, window.innerHeight/5, this.time);
     // this.shipFactory.generateAsteroids(10, 10, this.time);
     this.shipHandler.act(this.time);
   }

@@ -1,15 +1,15 @@
 import {ShipAssembler} from "./ShipAssembler.ts";
 import {ShipCreator} from "../../html_creator/ShipCreator.ts";
-import {JuditCruiser} from "../../../ships/JuditCruiser.ts";
+import {SithFighter} from "../../../ships/SithFighter.ts";
 import {Scheduler} from "../../../events/Scheduler.ts";
 
-export class JuditCruiserAssembler extends ShipAssembler {
+export class SithFighterAssembler extends ShipAssembler {
     private scheduler = new Scheduler();
 
     create(timeOfAppearance: number, horizontalPosition: number, time: number) {
         if (this.scheduler.shouldFire(time, timeOfAppearance)) {
-            const teleporter: JuditCruiser = new JuditCruiser(ShipCreator.createTeleporter(horizontalPosition));
-            this.shipManager.addShip(teleporter);
+            const sithFighter: SithFighter = new SithFighter(ShipCreator.createSithFighter(horizontalPosition));
+            this.shipManager.addShip(sithFighter);
         }
     }
 }

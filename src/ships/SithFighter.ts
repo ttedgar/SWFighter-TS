@@ -5,7 +5,7 @@ import {VectorMath} from "../utility/VectorMath.ts";
 import {TieShot} from "../shot/TieShot.ts";
 import {BlasterShot} from "../shot/BlasterShot.ts";
 
-export class JuditCruiser extends Ship {
+export class SithFighter extends Ship {
     private static readonly HP: number = 1;
     private static readonly WIDTH: number = -10;
     private static readonly HEIGHT: number = 25;
@@ -17,8 +17,8 @@ export class JuditCruiser extends Ship {
     private vortex1: HTMLElement;
     private vortex2: HTMLElement;
 
-    constructor(element: HTMLElement, isDown: boolean = true, _speedLeft: number = JuditCruiser.HORIZONTAL_SPEED) {
-        super(element, JuditCruiser.WIDTH, JuditCruiser.HEIGHT, JuditCruiser.HP, JuditCruiser.VERTICAL_SPEED, isDown);
+    constructor(element: HTMLElement, isDown: boolean = true, _speedLeft: number = SithFighter.HORIZONTAL_SPEED) {
+        super(element, SithFighter.WIDTH, SithFighter.HEIGHT, SithFighter.HP, SithFighter.VERTICAL_SPEED, isDown);
         this.lastShotTime = 0;
         this.isVortexOn = false;
         this.isTeleportOn = true;
@@ -119,7 +119,7 @@ export class JuditCruiser extends Ship {
     shoot(time: number) {
         if (Utility.isTimeTo(time, 1, this.lastShotTime) && this._shipManager && this._shotManager && this.isTeleportOn) {
             this.lastShotTime = Utility.convertTime(time);
-            const shotHtml: HTMLElement = EffectFactory.createJuditCruiserShot(this.element);
+            const shotHtml: HTMLElement = EffectFactory.createSithFighterShot(this.element);
             const [verticalVel, horizontalVel] = VectorMath.aimVector(
                 this.getVerticalPosition(),
                 this.getHorizontalPosition(),

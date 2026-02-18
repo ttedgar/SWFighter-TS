@@ -3,7 +3,7 @@ import {TieFighterAssembler} from "./assembler/TieFighterAssembler.ts";
 import {DeathstarAssembler} from "./assembler/DeathstarAssembler.ts";
 import {ShutterAssembler} from "./assembler/ShutterAssembler.ts";
 import {StarDestroyerAssembler} from "./assembler/StarDestroyerAssembler.ts";
-import {JuditCruiserAssembler} from "./assembler/JuditCruiserAssembler.ts";
+import {SithFighterAssembler} from "./assembler/SithFighterAssembler.ts";
 import {AsteroidAssembler} from "./assembler/AsteroidAssembler.ts";
 import {Utility} from "../../utility/Utility.ts";
 
@@ -12,7 +12,7 @@ export class ShipFactory{
     private deathstarAssembler!: DeathstarAssembler;
     private shuttleAssembler!: ShutterAssembler;
     private starDestroyerAssembler!: StarDestroyerAssembler;
-    private teleporterAssembler!: JuditCruiserAssembler;
+    private sithFighterAssembler!: SithFighterAssembler;
     private asteroidAssembler!: AsteroidAssembler;
 
     public setShipManager(shipManager: ShipManager) {
@@ -20,7 +20,7 @@ export class ShipFactory{
         this.deathstarAssembler = new DeathstarAssembler(shipManager);
         this.shuttleAssembler = new ShutterAssembler(shipManager);
         this.starDestroyerAssembler = new StarDestroyerAssembler(shipManager);
-        this.teleporterAssembler = new JuditCruiserAssembler(shipManager);
+        this.sithFighterAssembler = new SithFighterAssembler(shipManager);
         this.asteroidAssembler = new AsteroidAssembler(shipManager);
     }
 
@@ -46,8 +46,8 @@ export class ShipFactory{
         this.starDestroyerAssembler.create(timeOfAppearance, verticalPosition, time);
     }
 
-    public createJuditCruiser(timeOfAppearance: number, verticalPosition: number, time: number) {
-        this.teleporterAssembler.create(timeOfAppearance, verticalPosition, time);
+    public createSithFighter(timeOfAppearance: number, verticalPosition: number, time: number) {
+        this.sithFighterAssembler.create(timeOfAppearance, verticalPosition, time);
     }
 
     public createAsteroid(timeOfAppearance: number, verticalPosition: number, time: number, hp: number) {
