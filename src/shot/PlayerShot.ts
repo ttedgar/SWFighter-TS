@@ -8,7 +8,7 @@ export class PlayerShot extends Shot {
         super(element);
     }
 
-    private fly(time: number) {
+    public override fly(time: number): void {
         if (Utility.isTimeTo(time, 1, this.lastTime, 1)) {
             this.lastTime = Utility.convertTime(time, 1);
             this.element.style.left = Utility.positionToNumber(this.element.style.left) + PlayerShot.SPEED + 'px';

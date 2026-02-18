@@ -13,7 +13,10 @@ export class ShotHandler{
 
     public moveShots(time: number) {
         this._shotManager.getShots().forEach(shot => shot.fly(time));
-        this._shotManager.getPlayerShots().forEach(shot => shot.fly(time))
+        this._shotManager.getPlayerShots().forEach(shot => shot.fly(time));
+        this._shotManager.setPlayerShots(
+            this._shotManager.getPlayerShots().filter(shot => shot.element.isConnected)
+        );
         this._shotManager.getShots().filter(shot => shot.isHoming()).forEach(shot => {
             const smartAmmo = shot as Homing;
             smartAmmo.homing(this._shipManager.getXWing().getVerticalPosition(), this._shipManager.getXWing().getHorizontalPosition())
