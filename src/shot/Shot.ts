@@ -46,10 +46,6 @@ export abstract class Shot {
             this._element.remove();
         }, 500)
     }
-
-    public isHoming(): boolean {
-        return false;
-}
 }
 
 

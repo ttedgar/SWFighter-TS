@@ -1,6 +1,7 @@
 import {ShotManager} from "../game/ShotManager.ts";
 import {ShipManager} from "../game/ShipManager.ts";
-import {Homing} from "./Homing.ts";
+import {Missile} from "./Missile.ts";
+import {KamikazeDrone} from "./KamikazeDrone.ts";
 
 export class ShotHandler{
     private _shotManager: ShotManager;
@@ -17,9 +18,8 @@ export class ShotHandler{
         this._shotManager.setPlayerShots(
             this._shotManager.getPlayerShots().filter(shot => shot.element.isConnected)
         );
-        this._shotManager.getShots().filter(shot => shot.isHoming()).forEach(shot => {
-            const smartAmmo = shot as Homing;
-            smartAmmo.homing(this._shipManager.getXWing().getVerticalPosition(), this._shipManager.getXWing().getHorizontalPosition())
-        })
+        this._shotManager.getShots()
+            .filter((shot): shot is Missile | KamikazeDrone => shot instanceof Missile || shot instanceof KamikazeDrone)
+            .forEach(shot => shot.homing(this._shipManager.getXWing().getVerticalPosition(), this._shipManager.getXWing().getHorizontalPosition()))
     }
 }

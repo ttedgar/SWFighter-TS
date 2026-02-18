@@ -36,8 +36,4 @@ export class KamikazeDrone extends Shot implements Homing {
             this.modifyLeft(1);
         }
     }
-
-    isHoming(): boolean {
-        return true;
-    }
 }

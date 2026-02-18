@@ -27,13 +27,9 @@ export class Missile extends Shot implements Homing{
 
     public homing(xWingVerticalPosition: number) {
         if (this.getVerticalPosition() > xWingVerticalPosition + 40) {
-            this.modifyTop(-1);
+            this.modifyTop(-1.5);
         } else {
-            this.modifyTop(1);
+            this.modifyTop(1.5);
         }
-    }
-
-    isHoming(): boolean {
-        return true;
     }
 }
