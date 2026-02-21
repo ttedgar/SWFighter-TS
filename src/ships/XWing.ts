@@ -64,8 +64,8 @@ export class XWing extends Ship {
     }
 
     public die() {
-        // const score = this.scoringManager?.getScore() ?? 0;
-        // Utility.gameOver(score);
+        const score = this.scoringManager?.getScore() ?? 0;
+        Utility.gameOver(score);
     }
 
     public setScoringManager(scoringManager: ScoringManager) {
