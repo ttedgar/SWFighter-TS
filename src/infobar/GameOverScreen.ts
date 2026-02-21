@@ -17,5 +17,11 @@ export class GameOverScreen {
         restartBtn.addEventListener('click', () => {
             window.location.reload();
         });
+
+        window.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+                window.location.reload();
+            }
+        });
     }
 }

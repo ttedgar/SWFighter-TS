@@ -1,3 +1,5 @@
+import {RestartConfirmation} from "../infobar/RestartConfirmation.ts";
+
 export class EventHandler {
     private _up: boolean;
     private _down: boolean;
@@ -33,6 +35,9 @@ export class EventHandler {
         }
         if (event.key === 's') {
             this._shoot = true;
+        }
+        if (event.key === 'r' || event.key === 'R') {
+            RestartConfirmation.show();
         }
     }
 

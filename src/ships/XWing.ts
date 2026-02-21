@@ -15,7 +15,7 @@ export class XWing extends Ship {
     private eventHandler: EventHandler;
     private isInvincible: boolean;
     private lastTime: number;
-    private static readonly SPEED: number = 10;
+    private static readonly SPEED: number = 8;
     private scoringManager?: ScoringManager;
 
 
@@ -64,8 +64,8 @@ export class XWing extends Ship {
     }
 
     public die() {
-        const score = this.scoringManager?.getScore() ?? 0;
-        Utility.gameOver(score);
+        // const score = this.scoringManager?.getScore() ?? 0;
+        // Utility.gameOver(score);
     }
 
     public setScoringManager(scoringManager: ScoringManager) {

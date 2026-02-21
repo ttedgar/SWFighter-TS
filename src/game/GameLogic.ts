@@ -15,6 +15,7 @@ import {ScoringManager} from "./ScoringManager.ts";
 import {Utility} from "../utility/Utility.ts";
 import {SithFighter} from "../ships/SithFighter.ts";
 import {VictoryScreen} from "../infobar/VictoryScreen.ts";
+import {StartScreen} from "../infobar/StartScreen.ts";
 
 
 export class GameLogic implements ShotManager, ShipManager, ScoringManager {
@@ -58,6 +59,7 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
     this.shipHandler.setShipManager(this);
     this.shotHandler.setUp(this, this);
     InfoBar.createInfoBar(this.xWing.hp);
+    StartScreen.show();
     requestAnimationFrame(this.gameLoop);
   }
 
@@ -73,30 +75,28 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
   }
 
   private createShips() {
-    // Training phase: asteroids to warm up
-    this.shipFactory.generateAsteroids(8, 15, this.time);
+    this.shipFactory.generateAsteroids(50, 8, 15, this.time);
 
-    // First enemy: TieFighter swarms
     this.shipFactory.createTieSwarm(100, window.innerHeight / 4, this.time, 10, 8);
     this.shipFactory.createTieSwarm(200, (window.innerHeight * 3) / 4, this.time, 10, 8);
 
-    // Mid-game: Shuttles
-    this.shipFactory.createShuttle(300, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
-    this.shipFactory.createShuttle(400, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
-    this.shipFactory.createShuttle(500, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
 
-    // Mid-game: Star Destroyer
+    this.shipFactory.createShuttle(300, window.innerHeight / 4, this.time, Utility.rng(0.7, 3));
+    this.shipFactory.createShuttle(301, (window.innerHeight * 3) / 4, this.time, Utility.rng(0.7, 3));
+    this.shipFactory.createShuttle(400, window.innerHeight / 4, this.time, Utility.rng(0.7, 3));
+    this.shipFactory.createShuttle(401, (window.innerHeight * 3) / 4, this.time, Utility.rng(0.7, 3));
+    this.shipFactory.createShuttle(500, window.innerHeight / 4, this.time, Utility.rng(0.7, 3));
+    this.shipFactory.createShuttle(501, (window.innerHeight * 3) / 4, this.time, Utility.rng(0.7, 3));
+
     this.shipFactory.createStarDestroyer(700, window.innerHeight / 2, this.time);
 
-    // Late-game: Deathstar defended by TieFighters and Shuttles
     this.shipFactory.createDeathStar(1000, this.time);
     this.shipFactory.createTieSwarm(900, window.innerHeight / 4, this.time, 8, 10);
     this.shipFactory.createTieSwarm(901, (window.innerHeight * 3) / 4, this.time, 8, 10);
     this.shipFactory.createShuttle(950, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
     this.shipFactory.createShuttle(951, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
 
-    // Final boss: SithFighter
-    this.shipFactory.createSithFighter(1300, window.innerHeight / 2, this.time);
+    this.shipFactory.createSithFighter(1, window.innerHeight / 2, this.time);
 
     this.shipHandler.act(this.time);
   }
