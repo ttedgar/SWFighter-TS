@@ -96,7 +96,7 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
     this.shipFactory.createShuttle(950, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
     this.shipFactory.createShuttle(951, Utility.rng(window.innerHeight / 8, window.innerHeight * 7 / 8), this.time, Utility.rng(0.7, 3));
 
-    this.shipFactory.createSithFighter(1, window.innerHeight / 2, this.time);
+    this.shipFactory.createSithFighter(1300, window.innerHeight / 2, this.time);
 
     this.shipHandler.act(this.time);
   }
