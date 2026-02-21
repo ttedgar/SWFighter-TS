@@ -55,11 +55,11 @@ export class ShipFactory{
     }
 
 
-    public generateAsteroids(amount: number, timeBetweenAsteroids: number, time: number) {
+    public generateAsteroids(startOfAppearance: number, amount: number, timeBetweenAsteroids: number, time: number) {
         for (let i = 0; i < amount; i++) {
             const hp: number = Math.round(Utility.rng(1, 8));
             const verticalPosition: number = window.innerHeight/8 * Utility.rng(1, 7);
-            this.createAsteroid(i * timeBetweenAsteroids, verticalPosition, time, hp);
+            this.createAsteroid(startOfAppearance + (i * timeBetweenAsteroids), verticalPosition, time, hp);
         }
     }
 }

@@ -11,6 +11,7 @@ export class SithFighter extends Ship {
     private static readonly HEIGHT: number = 35;
     private static readonly VERTICAL_SPEED: number = 3;
     private static readonly HORIZONTAL_SPEED: number = 3;
+    private static readonly AIM_VERTICAL_OFFSET: number = 0.15;
     private lastShotTime: number;
     private isVortexOn: boolean;
     private isTeleportOn: boolean;
@@ -28,19 +29,13 @@ export class SithFighter extends Ship {
 
     private rotateShip(): void {
         if (this._shipManager) {
-            const [verticalVel] = VectorMath.aimVector(
+            const [verticalVel, horizontalVel] = VectorMath.aimVector(
                 this.getVerticalPosition(),
                 this.getHorizontalPosition(),
                 this._shipManager.getXWing().getVerticalPosition(),
                 this._shipManager.getXWing().getHorizontalPosition()
             );
-            let rotation: number = 0;
-            const hDist = this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition();
-            if (hDist > 0) {
-                rotation = verticalVel * 9;
-            } else if (hDist < 0) {
-                rotation = verticalVel * -9 + 180;
-            }
+            const rotation: number = Math.atan2(verticalVel, horizontalVel) * 180 / Math.PI;
             this.element.style.transform = `rotate(${rotation}deg)`;
         }
     }
@@ -134,18 +129,12 @@ export class SithFighter extends Ship {
             const [verticalVel, horizontalVel] = VectorMath.aimVector(
                 this.getVerticalPosition(),
                 this.getHorizontalPosition(),
-                this._shipManager.getXWing().getVerticalPosition() - this._shipManager.getXWing().height/3,
-                this._shipManager.getXWing().getHorizontalPosition() + this._shipManager.getXWing().width*3
+                this._shipManager.getXWing().getVerticalPosition(),
+                this._shipManager.getXWing().getHorizontalPosition()
             );
-            let rotation: number = 0;
-            const hDist = this.getHorizontalPosition() - this._shipManager.getXWing().getHorizontalPosition() - this._shipManager.getXWing().width*3;
-            if (hDist > 0) {
-                rotation = verticalVel * 9;
-            } else if (hDist < 0) {
-                rotation = verticalVel * -9 + 180;
-            }
+            const rotation: number = Math.atan2(verticalVel, horizontalVel) * 180 / Math.PI;
             shotHtml.style.transform = `rotate(${rotation}deg)`;
-            const shot: TieShot = new BlasterShot(shotHtml, verticalVel, horizontalVel);
+            const shot: TieShot = new BlasterShot(shotHtml, verticalVel - SithFighter.AIM_VERTICAL_OFFSET, horizontalVel);
             this._shotManager.registerShot(shot);
         }
     }

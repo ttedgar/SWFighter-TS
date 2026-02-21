@@ -31,7 +31,7 @@ export class Asteroid extends Ship {
     private createFragments() {
         if (this.startingHp > 1) {
             for (let i = 0; i < Utility.rng(3, 6); i++) {
-                const fragmentHp: number = Math.round(Utility.rng(0, this.startingHp / 2));
+                const fragmentHp: number = Math.max(1, Math.round(Utility.rng(1, this.startingHp / 2)));
                 const fragmentVerticalPosition: number = Utility.positionToNumber(this.element.style.top);
                 const fragmentHtml = ShipCreator.createAsteroid(fragmentVerticalPosition, fragmentHp * Asteroid._HEIGHT_TO_HP_RATIO);
                 fragmentHtml.style.left = this.element.style.left;
@@ -39,6 +39,7 @@ export class Asteroid extends Ship {
                 const fragmentHorizontalSpeed: number = Utility.rng(-1, 2 * fragmentSpeed + this.horizontalSpeed);
                 const fragmentVerticalSpeed: number = Utility.rng(-1 * fragmentSpeed, fragmentSpeed);
                 const fragment: Asteroid = new Asteroid(fragmentHtml, fragmentHorizontalSpeed, fragmentVerticalSpeed, fragmentHp);
+                fragment.setShipManager(this._shipManager);
                 this._shipManager.addShip(fragment);
             }
         }
