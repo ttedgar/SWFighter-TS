@@ -32,6 +32,7 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
   private shotHandler: ShotHandler;
   private score: number;
   private sithFighterDefeated: boolean;
+  private gameEnded: boolean;
 
   constructor() {
     this.lastTime = 0;
@@ -41,6 +42,7 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
     this.enemyShots = [];
     this.score = 0;
     this.sithFighterDefeated = false;
+    this.gameEnded = false;
     this.eventHandler = new EventHandler();
     this.xWing = new XWing(ShipCreator.createXWingHtml(), 10, this.eventHandler);
     this.shipFactory = new ShipFactory();
@@ -69,7 +71,9 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
     this.checkVictory();
     this.hitDetector.checkForHits();
     this.shotHandler.moveShots(this.time);
-    this.xWing.handleXWing(this.time);
+    if (!this.gameEnded) {
+      this.xWing.handleXWing(this.time);
+    }
     this.createShips();
     requestAnimationFrame(this.gameLoop);
   }
@@ -190,6 +194,12 @@ export class GameLogic implements ShotManager, ShipManager, ScoringManager {
 
   public triggerVictory(): void {
     this.sithFighterDefeated = true;
+    this.endGame();
     VictoryScreen.show(this.score);
+  }
+
+  public endGame(): void {
+    this.gameEnded = true;
+    this.xWing.remove();
   }
 }

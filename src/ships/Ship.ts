@@ -12,6 +12,7 @@ export abstract class Ship {
     protected _shipManager!: ShipManager;
     protected verticalSpeed?: number;
     protected isDown?: boolean;
+    protected isDead: boolean;
 
     constructor(element: HTMLElement, width: number, height: number, hp: number, verticalSpeed?: number, isDown?: boolean) {
         this._element = element;
@@ -21,6 +22,7 @@ export abstract class Ship {
         this._hp = hp;
         this.verticalSpeed = verticalSpeed ?? 0;
         this.isDown = isDown ?? false;
+        this.isDead = false;
     }
 
     public abstract move(): void;
@@ -46,6 +48,7 @@ export abstract class Ship {
     public getHit() {
         this._hp--;
         if (this._hp === 0) {
+            this.isDead = true;
             this.die();
         }
     }
@@ -69,6 +72,10 @@ export abstract class Ship {
 
     get element(): HTMLElement {
         return this._element;
+    }
+
+    get dead(): boolean {
+        return this.isDead;
     }
 
     protected bounceVertically(): void {

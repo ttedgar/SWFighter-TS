@@ -64,18 +64,24 @@ export class HitController {
     }
 
     private checkDeathLaserHit() {
+        const xwing = this.shipManager.getXWing();
+        if (xwing.dead) return;
+
         const deathstar: Deathstar = this.shipManager.getShips().filter(ship => ship instanceof Deathstar)[0] as Deathstar;
-        if (ShootingMechanics.isPlayerHitByLaser(deathstar, this.shipManager.getXWing())) {
-            const bang: HTMLElement = EffectFactory.createBang(this.shipManager.getXWing().element);
+        if (ShootingMechanics.isPlayerHitByLaser(deathstar, xwing)) {
+            const bang: HTMLElement = EffectFactory.createBang(xwing.element);
             bang.style.top = deathstar.getLaserTop() + 150 + 'px';
-            this.shipManager.getXWing().getHit();
+            xwing.getHit();
         }
     }
 
     private checkEnemyShotHits() {
+        const xwing = this.shipManager.getXWing();
+        if (xwing.dead) return;
+
         this.shotManager.getShots().forEach(shot => {
-            if (ShootingMechanics.isPlayerHitByShot(shot, this.shipManager.getXWing())) {
-                this.shipManager.getXWing().getHit();
+            if (ShootingMechanics.isPlayerHitByShot(shot, xwing)) {
+                xwing.getHit();
                 shot.hit();
                 this.shotManager.removeShot(shot);
             }
@@ -83,9 +89,12 @@ export class HitController {
     }
 
     private checkCrashes() {
+        const xwing = this.shipManager.getXWing();
+        if (xwing.dead) return;
+
         this.shipManager.getShips().forEach((ship: Ship) => {
-            if (ShootingMechanics.isCrashed(ship, this.shipManager.getXWing())) {
-                this.shipManager.getXWing().getHit();
+            if (ShootingMechanics.isCrashed(ship, xwing)) {
+                xwing.getHit();
                 ship.getHit();
             }
         })
